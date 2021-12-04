@@ -1,4 +1,6 @@
-fun readReport(day: Int): List<String>? = object {}.javaClass.getResource("day$day.txt")?.readText()?.split("\n")
+import java.io.FileNotFoundException
+
+fun readReport(day: Int): List<String> = object {}.javaClass.getResource("day$day.txt")?.readText()?.split("\n") ?: throw FileNotFoundException()
 
 
 class Day1 {
@@ -18,8 +20,5 @@ class Day1 {
 }
 
 fun main() {
-    val realData = readReport(1)
-    if (realData != null) {
-        println(Day1().partTwo(realData))
-    }
+    println(Day1().partTwo(readReport(1)))
 }
