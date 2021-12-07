@@ -1,7 +1,7 @@
 import java.io.File
 import java.io.FileNotFoundException
 import kotlin.math.abs
-import kotlin.math.round
+import kotlin.math.ceil
 
 class Day7 {
 
@@ -11,31 +11,13 @@ class Day7 {
             File("src/main/resources/day7.txt").readLines()[0].split(",").map { it.toInt() }
                 ?: throw FileNotFoundException()
 
-        private fun cost(data: List<Int>, pivot: Int) = data.sumOf { abs(pivot - it) }
+        // cost optimum (minima)  = median
+        fun partOne(data: List<Int>): Int =
+            data.sumOf { abs(it - data.sorted()[data.size / 2]) }
 
-        private fun weightedCost(data: List<Int>, pivot: Int) = data.map { abs(pivot - it) }.sumOf { n -> n * (n + 1) / 2 }
-
-        private fun findOptimum(data: List<Int>, costs: (List<Int>, Int) -> Int): Int {
-            // optimisation in 1D: Find x such that costs(data, x) is minimal
-            fun costsUp(pivot: Int): Int = costs(data, pivot + 1)
-            fun costsDown(pivot: Int): Int = costs(data, pivot - 1)
-            var pivot = round(data.average()).toInt()
-            val initialDirection = if (costsUp(pivot) < costs(data, pivot)) 1 else -1
-            while (costsUp(pivot) < costs(data, pivot)
-                || costsDown(pivot) < costs(data, pivot)
-            ) {
-                pivot += initialDirection
-            }
-            return costs(data, pivot).also { print(pivot) }
-        }
-
-        fun partOne(data: List<Int>): Int {
-            return findOptimum(data, Day7::cost)
-        }
-
-        fun partTwo(data: List<Int>): Int {
-            return findOptimum(data, Day7::weightedCost)
-        }
+        // cost optimum (minima)  = ceiled average
+        fun partTwo(data: List<Int>): Int =
+            data.map { abs(it - ceil(data.average())) }.sumOf { it * (it + 1) / 2 }.toInt()
     }
 }
 
