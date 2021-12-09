@@ -2,7 +2,7 @@ import junit.framework.TestCase
 
 class Day9Test : TestCase() {
 
-    val testData: List<String> = """
+    private val testData: List<String> = """
         2199943210
         3987894921
         9856789892

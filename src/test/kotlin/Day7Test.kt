@@ -1,14 +1,14 @@
 import junit.framework.TestCase
 class Day7Test : TestCase() {
 
-    val testData  = listOf(16,1,2,0,4,2,7,1,2,14)
+    private val testData = listOf(16, 1, 2, 0, 4, 2, 7, 1, 2, 14)
 
 
-    fun testpartOne() {
+    fun testPartOne() {
         assertEquals(37, Day7.partOne(testData))
     }
 
-    fun testpartTwo() {
+    fun testPartTwo() {
         assertEquals(168, Day7.partTwo(testData))
     }
 }

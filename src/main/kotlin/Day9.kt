@@ -32,10 +32,10 @@ class Day9 {
             return getBasinSizeRec(localMin, curr, HashSet())
         }
 
-        fun partOne(testData: List<List<Int>>): Int =
-            testData.indices2d()
-                .filter { testData.isLocalMin(it) }
-                .sumOf { (i, j) -> testData[i][j] + 1 }
+        fun partOne(heightMap: List<List<Int>>): Int =
+            heightMap.indices2d()
+                .filter { heightMap.isLocalMin(it) }
+                .sumOf { (i, j) -> heightMap[i][j] + 1 }
 
         fun partTwo(heightMap: List<List<Int>>): Int =
             heightMap.indices2d()
