@@ -17,10 +17,10 @@ class Day3Test : TestCase() {
         01010""".trimIndent().split("\n")
 
     fun testPartOne() {
-        assertEquals(198, Day3().partOne(testData))
+        assertEquals(198, Day3.partOne(testData))
     }
 
     fun testPartTwo() {
-        assertEquals(230, Day3().partTwo(testData))
+        assertEquals(230, Day3.partTwo(testData))
     }
 }

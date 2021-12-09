@@ -15,14 +15,14 @@ class Day1Test : TestCase() {
         263""".trimIndent().split("\n")
 
     fun testSampleData() {
-        assertEquals(7, Day1().partOne(testData))
-        assertEquals(5, Day1().partTwo(testData))
+        val input = Day1.readReport(testData)
+        assertEquals(7, Day1.partOne(input))
+        assertEquals(5, Day1.partTwo(input))
     }
 
     fun testRealData() {
-        val data = readReport(1)
-        assertNotNull(data)
-        assertEquals(1342, Day1().partOne(data!!))
-        assertEquals(1378, Day1().partTwo(data))
+        val input = Day1.readReport()
+        assertEquals(1342, Day1.partOne(input))
+        assertEquals(1378, Day1.partTwo(input))
     }
 }
