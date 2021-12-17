@@ -4,7 +4,7 @@
 
 - Who needs readability if the answer is short, right? Right?
 
-| Day | Solved | Styled |
+| Day | Solved | Nice solution |
 |-----|--------|--------|
 | [1](https://github.com/jkrude/AdventOfCode2021/blob/master/src/main/kotlin/Day1.kt)   | :star: | :heavy_check_mark: |
 | 2                                                                                     | :star: |                    |
@@ -15,6 +15,14 @@
 | [7](https://github.com/jkrude/AdventOfCode2021/blob/master/src/main/kotlin/Day7.kt)   | :star: | :heavy_check_mark: |
 | [8](https://github.com/jkrude/AdventOfCode2021/blob/master/src/main/kotlin/Day8.kt)   | :star: | :heavy_check_mark: |
 | [9](https://github.com/jkrude/AdventOfCode2021/blob/master/src/main/kotlin/Day9.kt)   | :star: | :heavy_check_mark: |
+| 10                                                                                    | :star: |                    |
+| 11                                                                                    | :star: |                    |
+| 12                                                                                    | :star: |                    |
+| [13](https://github.com/jkrude/AdventOfCode2021/blob/master/src/main/kotlin/Day13.kt)                                                                                    | :star: | :heavy_check_mark: |
+| 14                                                                                    | :star: |                    |
+| 15                                                                                    |        |                    |
+| 16                                                                                    |        |                    |
+| 17                                                                                    | :star: |                    |
 
 # Interesting findings
 
