@@ -1,5 +1,5 @@
 import kotlin.math.abs
-import kotlin.math.ceil
+import kotlin.math.round
 
 class Day7 {
 
@@ -14,7 +14,7 @@ class Day7 {
 
         // cost optimum (minima)  = ceiled average
         fun partTwo(crabPositions: List<Int>): Int = crabPositions
-            .map { abs(it - ceil(crabPositions.average())) }
+            .map { abs(it - round(crabPositions.average())) }
             .sumOf { it * (it + 1) / 2 }.toInt()
     }
 }
