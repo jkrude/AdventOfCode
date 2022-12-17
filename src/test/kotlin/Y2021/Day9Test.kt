@@ -1,3 +1,5 @@
+package Y2021
+
 import junit.framework.TestCase
 
 class Day9Test : TestCase() {

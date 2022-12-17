@@ -1,5 +1,5 @@
 fun importReport(): Pair<List<Int>, List<Board>>? {
-    val file = {}.javaClass.getResource("day4.txt")?.readText() ?: return null
+    val file = {}.javaClass.getResource("Y2021/day4.txt")?.readText() ?: return null
     val split = file.split("\n\n")
     val inputNums: List<Int> = split[0].split(",").map { Integer.parseInt(it) }
     val boards: MutableList<Board> = ArrayList()

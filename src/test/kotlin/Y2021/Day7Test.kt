@@ -1,4 +1,8 @@
+package Y2021
+
+import Day7
 import junit.framework.TestCase
+
 class Day7Test : TestCase() {
 
     private val testData = listOf(16, 1, 2, 0, 4, 2, 7, 1, 2, 14)

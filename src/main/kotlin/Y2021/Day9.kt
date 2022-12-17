@@ -1,16 +1,16 @@
+package Y2021
+
+import getOrNull
+import indices2d
+import neighbours
+import readFileLines
+
 class Day9 {
 
     companion object {
 
         fun readReport(fileLines: List<String> = readFileLines(9)): List<List<Int>> =
             fileLines.map { it.map { c -> c.digitToInt() } }
-
-        private fun Pair<Int, Int>.neighbours(): List<Pair<Int, Int>> = listOf(
-            (first + 1) to second,
-            (first - 1) to second,
-            first to (second + 1),
-            first to (second - 1)
-        )
 
         // local minimum if all neighbours are greater
         private fun List<List<Int>>.isLocalMin(ij: Pair<Int, Int>): Boolean =

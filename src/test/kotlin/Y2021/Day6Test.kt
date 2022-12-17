@@ -1,3 +1,6 @@
+package Y2021
+
+import Day6
 import junit.framework.TestCase
 
 class Day6Test : TestCase() {

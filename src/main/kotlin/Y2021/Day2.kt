@@ -22,6 +22,7 @@ class Day2 {
                         pos += amount
                         dist += aim * amount
                     }
+
                     "up" -> aim -= amount
                     "down" -> aim += amount
                 }

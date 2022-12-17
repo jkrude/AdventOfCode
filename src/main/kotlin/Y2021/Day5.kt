@@ -4,7 +4,7 @@ import kotlin.math.abs
 class Day5 {
 
     companion object {
-        fun readReport(): List<String> = object {}.javaClass.getResource("day5.txt")?.readText()
+        fun readReport(): List<String> = object {}.javaClass.getResource("Y2021/day5.txt")?.readText()
             ?.split("\n") ?: throw FileNotFoundException()
 
         fun convertReport(data: List<String>): List<Line> {
