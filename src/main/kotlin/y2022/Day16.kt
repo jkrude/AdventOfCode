@@ -59,7 +59,7 @@ object Day16 {
 
     fun computeAllPairShortestDistance(adjacencyMatrix: Array<IntArray>): Array<IntArray> {
         val copy: Array<IntArray> = adjacencyMatrix.map { it.copyOf() }.toTypedArray()
-        common.algorithms.allPairsShortestPath.floydWarshall(copy)
+        common.algorithms.AllPairsShortestPath.floydWarshall(copy)
         return copy
     }
 
