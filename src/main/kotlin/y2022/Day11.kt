@@ -1,6 +1,6 @@
-package Y2022
+package y2022
 
-import readFileLines
+import common.readFileLines
 
 class Day11 {
     companion object {
@@ -10,6 +10,6 @@ class Day11 {
 }
 
 fun main() {
-    println(partOne(readFileLines(11)))
+    println(partOneBrute(readFileLines(11)))
     println(partTwo(readFileLines(11)))
 }

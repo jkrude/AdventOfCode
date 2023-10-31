@@ -1,9 +1,8 @@
 package y2021
 
-import Day8
-import junit.framework.TestCase
+import org.junit.jupiter.api.Assertions.assertEquals
 
-class Day8Test : TestCase() {
+class Day8Test {
 
     private val testData = """
         be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe

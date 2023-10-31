@@ -1,9 +1,8 @@
 package y2021
 
-import Day12
-import junit.framework.TestCase
+import org.junit.jupiter.api.Assertions.assertEquals
 
-class Day12Test : TestCase() {
+class Day12Test {
 
     val testGraph1 = Day12.importData(
         """

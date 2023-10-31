@@ -1,7 +1,6 @@
 package y2021
 
-import Day13
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class Day13Test {
 

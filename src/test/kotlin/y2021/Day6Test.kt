@@ -1,9 +1,8 @@
 package y2021
 
-import Day6
-import junit.framework.TestCase
+import org.junit.jupiter.api.Assertions.assertEquals
 
-class Day6Test : TestCase() {
+class Day6Test {
 
     private val testData: List<Int> = listOf(3, 4, 3, 1, 2)
 
