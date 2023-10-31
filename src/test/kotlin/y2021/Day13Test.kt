@@ -1,4 +1,4 @@
-package Y2021
+package y2021
 
 import Day13
 import org.junit.Test

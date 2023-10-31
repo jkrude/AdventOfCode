@@ -10,7 +10,8 @@ import java.util.*
 object Setup {
 
 
-    val sessionCookie: String = TODO("Provide your session key here")
+    val sessionCookie: String =
+        "session=YOUR COOKIE HERE"
 
     fun downloadFileContent(fromWhere: URI): String {
         val client = HttpClient.newBuilder().build();
@@ -26,43 +27,43 @@ object Setup {
     }
 
     fun writeInputData(year: Int, day: Int, content: String) {
-        File("./src/main/resources/Y$year/day$day.txt")
+        File("./src/main/resources/y$year/day$day.txt")
             .writeText(content)
     }
 
     fun writeTestClass(year: Int, day: Int) {
-        require(File("./src/test/kotlin/Y$year/").exists())
+        require(File("./src/test/kotlin/y$year/").exists())
         val testClassCode = """
-            package Y$year
+            package y$year
 
             import org.junit.jupiter.api.Test
             import org.junit.jupiter.api.Assertions.*
 
             internal class Day${day}Test {
 
-                val testData = ""${'"'}
+                val getTestData = ""${'"'}
                 
                 ""${'"'}.trimIndent().lines()
 
                 @Test
-                internal fun partOne() {
-                    //assertEquals(, Y$year.Day$day.partOne(testData))
+                internal fun y2021.partOne() {
+                    //assertEquals(, y$year.Day$day.partOne(getTestData))
                 }
                 @Test
                 internal fun partTwo() {
-                    //assertEquals(,Y$year.Day$day.partTwo(testData))
+                    //assertEquals(,y$year.Day$day.partTwo(getTestData))
                 }
             }
         """.trimIndent()
-        File("./src/test/kotlin/Y$year/Day${day}Test.kt")
+        File("./src/test/kotlin/y$year/Day${day}Test.kt")
             .writeText(testClassCode)
     }
 
     fun writeClass(year: Int, day: Int) {
         val classCode = """
-            package Y$year
+            package y$year
 
-            import readFileLines
+            import common.readFileLines
 
             object Day$day {
                 fun partOne(lines: List<String>): Int = TODO()
@@ -74,8 +75,19 @@ object Setup {
                 println(Day${day}.partTwo(readFileLines($day)))
             }
         """.trimIndent()
-        File("./src/main/kotlin/Y$year/Day${day}.kt")
-            .writeText(classCode)
+        val file = File("./src/main/kotlin/y$year/Day${day}.kt")
+        file.createNewFile()
+        file.writeText(classCode)
+    }
+
+    private fun createFoldersIfNotExists(year: Int) {
+        listOf(
+            "./src/main/kotlin/y$year", "./src/main/resources/y$year",
+            "./src/test/kotlin/y$year", "./src/test/resources/y$year"
+        ).forEach {
+            val file = File(it)
+            if (!file.exists()) file.mkdir()
+        }
     }
 
     fun forDate(day: Int, month: Int = Calendar.DECEMBER, year: Int = Calendar.getInstance().get(Calendar.YEAR)) {
@@ -83,6 +95,7 @@ object Setup {
         val inputData = downloadFileContent(
             URI.create("https://adventofcode.com/$year/day/$day/input")
         )
+        createFoldersIfNotExists(year)
         writeInputData(year, day, inputData)
         writeClass(year, day)
         writeTestClass(year, day)
@@ -97,5 +110,5 @@ object Setup {
 }
 
 fun main() {
-    Setup.forDate(25)
+    Setup.forDate(1, year = 2020)
 }

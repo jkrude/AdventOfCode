@@ -1,3 +1,6 @@
+package y2021
+
+import common.readFileLines
 import kotlin.math.pow
 
 class Day3 {

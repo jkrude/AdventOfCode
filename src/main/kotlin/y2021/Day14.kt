@@ -1,3 +1,7 @@
+package y2021
+
+import common.readFileText
+
 class Day14 {
 
     companion object {

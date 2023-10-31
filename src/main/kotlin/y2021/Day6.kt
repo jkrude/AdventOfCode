@@ -1,3 +1,7 @@
+package y2021
+
+import common.readFileLines
+
 class Day6 {
     companion object {
 
@@ -34,6 +38,6 @@ class Day6 {
 
 fun main() {
     val data = Day6.readReport()
-    //println(d.partOne(data))
+    //println(d.y2021.partOne(data))
     println(Day6.partTwo(data))
 }

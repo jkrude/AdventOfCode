@@ -1,3 +1,8 @@
+package y2021
+
+import common.map
+import common.readFile
+
 class Day13 {
 
     companion object {

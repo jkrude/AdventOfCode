@@ -1,3 +1,5 @@
+package y2021
+
 import java.io.File
 
 class Day2 {
@@ -5,7 +7,8 @@ class Day2 {
     companion object {
 
         fun readReport(): List<Pair<String, Int>> =
-            File("src/main/resources/day2.txt").readLines().map { it.split(" ") }.map { it[0] to it[1].toInt() }
+            File("src/y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.main/resources/day2.txt").readLines()
+                .map { it.split(" ") }.map { it[0] to it[1].toInt() }
 
 
         fun partOne(data: List<Pair<String, Int>>): Int =

@@ -5,41 +5,58 @@ import java.util.*
 object Search {
 
 
-    private fun <Vertex> genericSearch(
-        edges: Map<Vertex, List<Vertex>>,
+    fun <Vertex> genericSearch(
         start: Vertex,
-        add: (Deque<Vertex>, Vertex) -> Unit
-    ): MutableList<Vertex> {
+        neighbours: (Vertex) -> Iterable<Vertex>,
+        add: (Deque<Vertex>, Vertex) -> Unit,
+        isTarget: (node: Vertex) -> Boolean = { _ -> false },
+        callOnEachVisited: (Vertex) -> Unit = {}
+    ) {
         val visited = mutableSetOf<Vertex>()
         val queue: Deque<Vertex> = ArrayDeque()
 
         queue.push(start)
-        val traversalList = mutableListOf<Vertex>()
         while (queue.isNotEmpty()) {
             val currentNode = queue.removeFirst()
-            if (!visited.contains(currentNode)) {
-                traversalList.add(currentNode)
-                visited.add(currentNode)
-                edges[currentNode]?.forEach { node ->
-                    add(queue, node)
-                }
+            if (visited.contains(currentNode)) {
+                continue
             }
+            visited.add(currentNode)
+
+            callOnEachVisited(currentNode)
+
+            if (isTarget(currentNode)) return
+
+            neighbours(currentNode).forEach { node ->
+                add(queue, node)
+            }
+        }
+    }
+
+    fun <Vertex> genericSearchTraversalList(
+        edges: Map<Vertex, List<Vertex>>,
+        start: Vertex,
+        add: (Deque<Vertex>, Vertex) -> Unit,
+        isTarget: (node: Vertex) -> Boolean = { _ -> false },
+    ): MutableList<Vertex> {
+        val traversalList = mutableListOf<Vertex>()
+        genericSearch(
+            start,
+            neighbours = { node: Vertex -> edges[node] ?: emptyList() },
+            add,
+            isTarget
+        ) {
+            traversalList.add(it)
         }
         return traversalList
     }
 
-    fun <Vertex> depthFirst(
-        edges: Map<Vertex, List<Vertex>>,
-        start: Vertex,
-    ): List<Vertex> {
-        return genericSearch(edges, start) { q, v -> q.addFirst(v) }
+    fun <Vertex> depthFirst(queue: Deque<Vertex>, node: Vertex) {
+        queue.addFirst(node)
     }
 
-    fun <Vertex> breadthFirst(
-        edges: Map<Vertex, List<Vertex>>,
-        start: Vertex,
-    ): List<Vertex> {
-        return genericSearch(edges, start) { q, v -> q.addLast(v) }
+    fun <Vertex> breadthFirst(queue: Deque<Vertex>, node: Vertex) {
+        queue.addLast(node)
     }
 
 }

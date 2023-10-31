@@ -1,3 +1,7 @@
+package y2021
+
+import common.readFileLines
+
 class Day12 {
 
     companion object {
