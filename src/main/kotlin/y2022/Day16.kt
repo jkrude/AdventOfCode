@@ -1,6 +1,6 @@
 package y2022
 
-import common.Algorithms.permutations
+import common.algorithms.permutations
 import common.readFileLines
 import kotlin.math.max
 
@@ -59,7 +59,7 @@ object Day16 {
 
     fun computeAllPairShortestDistance(adjacencyMatrix: Array<IntArray>): Array<IntArray> {
         val copy: Array<IntArray> = adjacencyMatrix.map { it.copyOf() }.toTypedArray()
-        common.algorithms.AllPairsShortestPath.floydWarshall(copy)
+        common.algorithms.allPairsShortestPath.floydWarshall(copy)
         return copy
     }
 
