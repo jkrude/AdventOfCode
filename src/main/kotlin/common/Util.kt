@@ -1,3 +1,5 @@
+package common
+
 import java.io.File
 import kotlin.math.abs
 
@@ -9,12 +11,31 @@ fun <T> Array<Array<T>>.indices2d() =
 
 
 fun readFileLines(day: Int): List<String> = readFile(day).readLines()
-fun readFile(day: Int, year: Int = 2022): File = File("src/main/resources/Y$year/day$day.txt")
+fun readFile(day: Int, year: Int = 2022): File =
+    File("src/y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.main/resources/Y$year/day$day.txt")
 fun readFileText(day: Int): String = readFile(day).readText()
+
+fun <X> List<Triple<X, X, X>>.unzip(): Triple<ArrayList<X>, ArrayList<X>, ArrayList<X>> {
+    val (firstList, secondList, thirdList) = fold(
+        listOf(
+            ArrayList<X>(),
+            ArrayList<X>(),
+            ArrayList<X>()
+        )
+    ) { foldingList: List<ArrayList<X>>, triple: Triple<X, X, X> ->
+        foldingList[0].add(triple.first)
+        foldingList[1].add(triple.second)
+        foldingList[2].add(triple.third)
+        foldingList
+    }
+    return Triple(firstList, secondList, thirdList)
+}
 
 fun <T> List<List<T>>.getOrNull(ij: Pair<Int, Int>) = this.getOrNull(ij.first)?.getOrNull(ij.second)
 
 fun <T, R> Pair<T, T>.map(lambda: (T) -> (R)): Pair<R, R> = lambda(first) to lambda(second)
+fun <T, R> Triple<T, T, T>.map(lambda: (T) -> (R)): Triple<R, R, R> =
+    Triple(lambda(first), lambda(second), lambda(third))
 
 fun Pair<Int, Int>.neighbours(): List<Pair<Int, Int>> = listOf(
     (first + 1) to second,
@@ -45,3 +66,13 @@ fun Pair<Int, Int>.allNeighbour(): List<Pair<Int, Int>> {
 }
 
 operator fun List<List<Int>>.get(ij: Pair<Int, Int>) = this[ij.first][ij.second]
+
+inline fun Boolean.runIfTrue(block: () -> Unit): Boolean {
+    if (this) block()
+    return this
+}
+
+fun <T> Iterable<T>.onlyUnique(): Set<T> {
+    val elementCounts: Map<T, Int> = this.groupingBy { it }.eachCount()
+    return elementCounts.filterValues { it == 1 }.keys
+}

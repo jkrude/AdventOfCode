@@ -38,7 +38,34 @@ data class Point2D(var x: Int = 0, var y: Int = 0) {
     fun manhattanDistanceTo(other: Point2D): Int =
         abs(this.x - other.x) + abs(this.y - other.y)
 
+    fun fourNeighbours(): List<Point2D> {
+        val (i, j) = this
+        return listOf(
+            Point2D(i + 1, j),
+            Point2D(i, j + 1),
+            Point2D(i, j - 1),
+            Point2D(i - 1, j),
+        )
+    }
+
+
+    fun eightNeighbours(): List<Point2D> {
+        val (i, j) = this
+        return listOf(
+            Point2D(i + 1, j + 1),
+            Point2D(i + 1, j),
+            Point2D(i + 1, j - 1),
+            Point2D(i, j + 1),
+            Point2D(i, j - 1),
+            Point2D(i - 1, j - 1),
+            Point2D(i - 1, j),
+            Point2D(i - 1, j + 1)
+        )
+    }
+
 }
 
 fun Point2D.of(pair: Pair<Int, Int>) = Point2D(pair.first, pair.second)
 infix fun Int.x2y(other: Int) = Point2D(this, other)
+
+fun <T> List<List<T>>.getOrNull(ij: Point2D) = this.getOrNull(ij.x)?.getOrNull(ij.y)

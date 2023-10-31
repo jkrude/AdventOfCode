@@ -1,9 +1,9 @@
-package Y2021
+package y2021
 
-import getOrNull
-import indices2d
-import neighbours
-import readFileLines
+import common.getOrNull
+import common.indices2d
+import common.neighbours
+import common.readFileLines
 
 class Day9 {
 
@@ -12,12 +12,12 @@ class Day9 {
         fun readReport(fileLines: List<String> = readFileLines(9)): List<List<Int>> =
             fileLines.map { it.map { c -> c.digitToInt() } }
 
-        // local minimum if all neighbours are greater
+        // local minimum if all y2021.neighbours are greater
         private fun List<List<Int>>.isLocalMin(ij: Pair<Int, Int>): Boolean =
             (ij).neighbours().all { this[ij.first][ij.second] < (this.getOrNull(it) ?: Int.MAX_VALUE) }
 
         private fun List<List<Int>>.getBasinSize(localMin: Pair<Int, Int>): Int {
-            // idea of recursive flood fill with 4 neighbours
+            // idea of recursive flood fill with 4 y2021.neighbours
             fun getBasinSizeRec(ij: Pair<Int, Int>, comp: Int, visited: MutableSet<Pair<Int, Int>>): Int {
                 val curr: Int = this.getOrNull(ij) ?: return 0
                 if (ij in visited || curr == 9) return 0

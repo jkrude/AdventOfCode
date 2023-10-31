@@ -1,6 +1,9 @@
+package y2021
+
 import java.io.File
 
-val testData = File("src/main/resources/day10.txt").readLines()
+val testData =
+    File("src/y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.main/resources/day10.txt").readLines()
 
 fun Char.isOpening() = this == '[' || this == '(' || this == '{' || this == '<'
 

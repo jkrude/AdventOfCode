@@ -1,3 +1,9 @@
+package y2021
+
+import common.allNeighbour
+import common.getOrNull
+import common.readFileLines
+
 class Octopus(var energyLevel: Int) {
 
     var hasFlashed = false
