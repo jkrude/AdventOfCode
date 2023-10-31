@@ -110,5 +110,5 @@ object Setup {
 }
 
 fun main() {
-    Setup.forDate(1, year = 2020)
+    Setup.forDate(5, year = 2020)
 }
