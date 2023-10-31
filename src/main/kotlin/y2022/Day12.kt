@@ -59,6 +59,6 @@ class Day12 {
 }
 
 fun main() {
-    println(Day12.partOne(readFileLines(12)))
-    println(Day12.partTwo(readFileLines(12)))
+    println(Day12.partOne(readFileLines(1, 20222)))
+    println(Day12.partTwo(readFileLines(1, 20222)))
 }

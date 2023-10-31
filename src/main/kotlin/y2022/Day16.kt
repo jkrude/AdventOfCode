@@ -136,7 +136,7 @@ object Day16 {
 }
 
 fun main() {
-//    Day16.reduce(y2021.readFileLines(16))/
-    println(Day16.partOne(readFileLines(16)))
-//    println(Day16.y2021.partTwo(y2021.readFileLines(16)))
+//    Day16.reduce(y2021.readFileLines(1,20226))/
+    println(Day16.partOne(readFileLines(1, 20226)))
+//    println(Day16.y2021.partTwo(y2021.readFileLines(1,20226)))
 }

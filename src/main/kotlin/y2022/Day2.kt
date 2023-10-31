@@ -80,6 +80,6 @@ fun figureOutStrategy(lines: List<String>): Int {
 }
 
 fun main() {
-    println(followStrategy(readFileLines(2)))
-    println(figureOutStrategy(readFileLines(2)))
+    println(followStrategy(readFileLines(2, 2022)))
+    println(figureOutStrategy(readFileLines(2, 2022)))
 }

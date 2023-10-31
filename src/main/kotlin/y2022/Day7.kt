@@ -106,7 +106,7 @@ class Day7 {
 }
 
 fun main() {
-    val tree: Day7.File = Day7.buildDir(readFileLines(7))
+    val tree: Day7.File = Day7.buildDir(readFileLines(7, 2022))
     println(Day7.partOne(tree))
     val testData = """
         ${'$'} cd /

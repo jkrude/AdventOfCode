@@ -38,5 +38,5 @@ class Day3 {
 
 fun main() {
 
-    println(Day3.partTwo(readFileLines(3)))
+    println(Day3.partTwo(readFileLines(3, 2021)))
 }

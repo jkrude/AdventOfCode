@@ -87,6 +87,6 @@ object Day22 {
 }
 
 fun main() {
-    println(Day22.partOne(readFileText(22)))
-    //println(Day22.y2021.partTwo(y2021.readFileText(22)))
+    println(Day22.partOne(readFileText(2, 20222)))
+    //println(Day22.y2021.partTwo(y2021.readFileText(2,20222)))
 }

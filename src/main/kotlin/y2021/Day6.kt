@@ -5,7 +5,7 @@ import common.readFileLines
 class Day6 {
     companion object {
 
-        fun readReport(fileLines: List<String> = readFileLines(6)): List<Int> =
+        fun readReport(fileLines: List<String> = readFileLines(6, 2021)): List<Int> =
             fileLines.first().split(",").map { it.toInt() }
 
         fun partOne(data: List<Int>): Int {

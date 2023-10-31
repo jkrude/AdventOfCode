@@ -8,7 +8,7 @@ class Day7 {
 
     companion object {
 
-        fun readReport(fileLines: List<String> = readFileLines(7)): List<Int> =
+        fun readReport(fileLines: List<String> = readFileLines(7, 2021)): List<Int> =
             fileLines[0].split(",").map { it.toInt() }
 
         // cost optimum (minima)  = median

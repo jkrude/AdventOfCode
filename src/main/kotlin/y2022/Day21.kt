@@ -141,6 +141,6 @@ object Day21 {
 }
 
 fun main() {
-    println(Day21.partOne(readFileLines(21)))
-    println(Day21.partTwo(readFileLines(21)))
+    println(Day21.partOne(readFileLines(2, 20221)))
+    println(Day21.partTwo(readFileLines(2, 20221)))
 }

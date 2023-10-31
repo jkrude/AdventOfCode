@@ -6,7 +6,7 @@ class Day14 {
 
     companion object {
 
-        fun parse(text: String = readFileText(14)): Pair<String, Map<String, Char>> {
+        fun parse(text: String = readFileText(1, 20214)): Pair<String, Map<String, Char>> {
             val (template, rulesInterim) = text.split("\n\n")
             val rules = rulesInterim.split("\n").map { it.split(" -> ") }.associate { it[0] to it[1][0] }
             return template to rules

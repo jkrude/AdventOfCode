@@ -29,7 +29,7 @@ class Day11 {
 
     companion object {
 
-        fun parse(input: List<String> = readFileLines(11)) =
+        fun parse(input: List<String> = readFileLines(1, 20211)) =
             input.map { it.map { c -> Octopus(c.digitToInt()) } }
 
         private fun <T> List<List<T>>.iterate2D(): List<Pair<Int, Int>> =
