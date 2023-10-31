@@ -1,9 +1,8 @@
 package y2021
 
-import Day2
-import junit.framework.TestCase
+import org.junit.jupiter.api.Assertions.assertEquals
 
-class Day2Test : TestCase() {
+class Day2Test {
 
     val testData = """
         forward 5

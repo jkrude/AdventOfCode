@@ -46,7 +46,7 @@ object Setup {
                 ""${'"'}.trimIndent().lines()
 
                 @Test
-                internal fun y2021.partOne() {
+                internal fun partOne() {
                     //assertEquals(, y$year.Day$day.partOne(getTestData))
                 }
                 @Test

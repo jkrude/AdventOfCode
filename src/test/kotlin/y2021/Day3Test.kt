@@ -1,9 +1,8 @@
 package y2021
 
-import Day3
-import junit.framework.TestCase
+import org.junit.jupiter.api.Assertions.assertEquals
 
-class Day3Test : TestCase() {
+class Day3Test {
 
     private val testData = """
         00100

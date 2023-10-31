@@ -1,8 +1,8 @@
 package y2022
 
-import junit.framework.TestCase
+import org.junit.jupiter.api.Assertions.assertEquals
 
-class Day1Test : TestCase() {
+class Day1Test {
     val testData = """
         1000
         2000
