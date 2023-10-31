@@ -121,6 +121,6 @@ fun main() {
         33549
         35390
     """.trimIndent().lines()
-    println(Day8.partTwo(readFileLines(8)))
-//    println(y2021.Day8.y2021.partOne(y2021.readFileLines(8)))
+    println(Day8.partTwo(readFileLines(8, 2022)))
+//    println(y2021.Day8.y2021.partOne(y2021.readFileLines(8,2022)))
 }

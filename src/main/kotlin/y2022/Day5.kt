@@ -66,6 +66,6 @@ class Day5 {
 }
 
 fun main() {
-    println(Day5.partOne(readFileText(5)))
-    println(Day5.partTwo(readFileText(5)))
+    println(Day5.partOne(readFileText(5, 2022)))
+    println(Day5.partTwo(readFileText(5, 2022)))
 }

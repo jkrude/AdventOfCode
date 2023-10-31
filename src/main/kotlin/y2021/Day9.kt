@@ -9,7 +9,7 @@ class Day9 {
 
     companion object {
 
-        fun readReport(fileLines: List<String> = readFileLines(9)): List<List<Int>> =
+        fun readReport(fileLines: List<String> = readFileLines(9, 2021)): List<List<Int>> =
             fileLines.map { it.map { c -> c.digitToInt() } }
 
         // local minimum if all y2021.neighbours are greater

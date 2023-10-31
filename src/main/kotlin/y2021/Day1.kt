@@ -6,7 +6,7 @@ class Day1 {
 
     companion object {
 
-        fun readReport(fileLines: List<String> = readFileLines(1)): List<Int> =
+        fun readReport(fileLines: List<String> = readFileLines(1, 2021)): List<Int> =
             fileLines.map { it.toInt() }
 
         fun partOne(depths: List<Int>): Int {

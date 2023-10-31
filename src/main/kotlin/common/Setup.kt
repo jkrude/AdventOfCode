@@ -71,8 +71,8 @@ object Setup {
             }
 
             fun main() {
-                println(Day${day}.partOne(readFileLines($day)))
-                println(Day${day}.partTwo(readFileLines($day)))
+                println(Day${day}.partOne(readFileLines($day,$year)))
+                //println(Day${day}.partTwo(readFileLines($day,$year)))
             }
         """.trimIndent()
         val file = File("./src/main/kotlin/y$year/Day${day}.kt")

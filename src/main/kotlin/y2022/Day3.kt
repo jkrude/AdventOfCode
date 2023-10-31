@@ -40,6 +40,6 @@ fun partTwo(lines: List<String>): Int {
 }
 
 fun main() {
-    println(partOneBrute(readFileLines(3)))
-    println(partTwo(readFileLines(3)))
+    println(partOneBrute(readFileLines(3, 2022)))
+    println(partTwo(readFileLines(3, 2022)))
 }

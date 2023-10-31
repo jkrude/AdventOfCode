@@ -7,7 +7,12 @@ class Day13 {
 
     companion object {
 
-        fun importData(fileText: String = readFile(13).readText()): Pair<List<Pair<Int, Int>>, List<Pair<String, Int>>> {
+        fun importData(
+            fileText: String = readFile(
+                13,
+                2021
+            ).readText()
+        ): Pair<List<Pair<Int, Int>>, List<Pair<String, Int>>> {
             val (dotsInterim, foldsInterim) = fileText.split("\n\n").map { it.split("\n") }
             val dots = dotsInterim.map { it.split(",") }.map { it[0].toInt() to it[1].toInt() }
             val regex = """([xy]=\d+)""".toRegex()

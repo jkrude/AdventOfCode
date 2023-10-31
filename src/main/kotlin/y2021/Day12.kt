@@ -9,7 +9,7 @@ class Day12 {
         private const val START = "start"
         private const val END = "end"
 
-        fun importData(input: List<String> = readFileLines(12)): MutableMap<String, MutableList<String>> {
+        fun importData(input: List<String> = readFileLines(1, 20212)): MutableMap<String, MutableList<String>> {
             val edges: List<Pair<String, String>> = input.map { it.split("-") }.map { it[0] to it[1] }
             val graph: MutableMap<String, MutableList<String>> = HashMap()
             for ((from, to) in edges) {

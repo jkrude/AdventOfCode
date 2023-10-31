@@ -10,6 +10,6 @@ class Day11 {
 }
 
 fun main() {
-    println(partOneBrute(readFileLines(11)))
-    println(partTwo(readFileLines(11)))
+    println(partOneBrute(readFileLines(1, 20221)))
+    println(partTwo(readFileLines(1, 20221)))
 }

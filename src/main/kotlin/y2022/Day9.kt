@@ -88,5 +88,5 @@ fun main() {
        L 25
        U 20
     """.trimIndent().lines()
-    println(Day9.partOne(readFileLines(9), 9))
+    println(Day9.partOne(readFileLines(9, 2022), 9))
 }

@@ -155,6 +155,6 @@ object Day15 {
 }
 
 fun main() {
-//    println(y2021.Day15.y2021.partOne(y2021.readFileLines(15)))
-    println(Day15.partTwo(readFileLines(15)))
+//    println(y2021.Day15.y2021.partOne(y2021.readFileLines(1,20225)))
+    println(Day15.partTwo(readFileLines(1, 20225)))
 }

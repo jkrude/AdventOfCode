@@ -119,6 +119,6 @@ class Day13 {
 }
 
 fun main() {
-    println(Day13.partOne(readFileText(13)))
-    println(Day13.partTwo(readFileText(13)))
+    println(Day13.partOne(readFileText(1, 20223)))
+    println(Day13.partTwo(readFileText(1, 20223)))
 }

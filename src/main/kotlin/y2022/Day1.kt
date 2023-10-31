@@ -39,7 +39,7 @@ fun bestN(lines: List<String>, n: Int): Int {
 }
 
 fun main() {
-    val lines: List<String> = readFileLines(1)
+    val lines: List<String> = readFileLines(1, 2022)
     println(maxNCalories(lines, 1))
     println(bestN(lines, 3))
 }

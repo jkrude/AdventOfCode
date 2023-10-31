@@ -9,7 +9,12 @@ class Day8 {
         // groupedSignals: length -> signals of that length
         // toBeDecoded: all words as set of char
         // completeData: groupedSignals zip toBeDecoded
-        fun readReport(fileLines: List<String> = readFileLines(8)): List<Pair<Map<Int, Set<Set<Char>>>, List<Set<Char>>>> {
+        fun readReport(
+            fileLines: List<String> = readFileLines(
+                8,
+                2021
+            )
+        ): List<Pair<Map<Int, Set<Set<Char>>>, List<Set<Char>>>> {
             val signals: MutableList<Map<Int, Set<Set<Char>>>> = ArrayList()
             val toBeDecoded: MutableList<List<Set<Char>>> = ArrayList()
             for (line in fileLines) {

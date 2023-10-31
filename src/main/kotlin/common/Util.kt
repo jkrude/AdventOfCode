@@ -10,10 +10,11 @@ fun <T> Array<Array<T>>.indices2d() =
     this.indices.flatMap { i -> this[i].indices.map { j -> i to j } }
 
 
-fun readFileLines(day: Int): List<String> = readFile(day).readLines()
-fun readFile(day: Int, year: Int = 2022): File =
-    File("src/y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.y2021.main/resources/Y$year/day$day.txt")
-fun readFileText(day: Int): String = readFile(day).readText()
+fun readFileLines(day: Int, year: Int): List<String> = readFile(day, year).readLines()
+fun readFile(day: Int, year: Int): File =
+    File("src/main/resources/Y$year/day$day.txt")
+
+fun readFileText(day: Int, year: Int): String = readFile(day, year).readText()
 
 fun <X> List<Triple<X, X, X>>.unzip(): Triple<ArrayList<X>, ArrayList<X>, ArrayList<X>> {
     val (firstList, secondList, thirdList) = fold(

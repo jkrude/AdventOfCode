@@ -7,7 +7,7 @@ class Day15 {
 
     companion object {
 
-        fun parse(fileLines: List<String> = readFileLines(15)) =
+        fun parse(fileLines: List<String> = readFileLines(1, 20215)) =
             fileLines.map { line -> line.map { it.digitToInt() } }
 
         fun partOne(map: List<List<Int>>): Int {
