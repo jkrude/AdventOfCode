@@ -18,6 +18,7 @@ test {
 }
 
 dependencies {
-
+    implementation 'io.arrow-kt:arrow-core:1.2.0'
+    implementation 'org.jgrapht:jgrapht-core:1.5.2'
     implementation 'org.junit.jupiter:junit-jupiter:5.10.0'
 }
