@@ -16,3 +16,18 @@ fun permutations(n: Int): Sequence<List<Int>> {
             }
     }
 }
+
+/**
+ * Iteratively increase a set until no new element was added.
+ * @param iterate the function supplying new elements based on the provided arguments.
+ * @return The combined set of elements found in every iteration (including the startSet).
+ */
+fun <E> iterativeSet(startSet: Set<E> = emptySet(), iterate: (Set<E>) -> Set<E>): MutableSet<E> {
+    val allFound: MutableSet<E> = startSet.toMutableSet()
+    var lastFound = startSet
+    while (lastFound.isNotEmpty()) {
+        lastFound = iterate(lastFound)
+        allFound.addAll(lastFound)
+    }
+    return allFound
+}
