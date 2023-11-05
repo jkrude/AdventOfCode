@@ -1,5 +1,7 @@
 package common
 
+import arrow.core.identity
+
 fun <X> List<Triple<X, X, X>>.unzip(): Triple<ArrayList<X>, ArrayList<X>, ArrayList<X>> {
     val (firstList, secondList, thirdList) = fold(
         listOf(
@@ -15,6 +17,8 @@ fun <X> List<Triple<X, X, X>>.unzip(): Triple<ArrayList<X>, ArrayList<X>, ArrayL
     }
     return Triple(firstList, secondList, thirdList)
 }
+
+fun List<String>.toCharList2D() = this.map { it.map(::identity) }
 
 fun <T, R> Pair<T, T>.map(lambda: (T) -> (R)): Pair<R, R> = lambda(first) to lambda(second)
 fun <T, R> Triple<T, T, T>.map(lambda: (T) -> (R)): Triple<R, R, R> =

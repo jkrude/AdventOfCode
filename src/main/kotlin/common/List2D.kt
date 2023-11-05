@@ -7,7 +7,7 @@ object Lists2D {
     fun <T> iterateUntilStable(map2D: List2D<T>, update: (List2D<T>) -> List2D<T>): List2D<T> {
         fun updateWithChange(map2D: List2D<T>): Pair<Boolean, List2D<T>> {
             val next = update(map2D)
-            return (map2D != next) to next
+            return (map2D == next) to next
         }
         return iterateUntilNoChange(map2D, ::updateWithChange)
     }
@@ -16,7 +16,7 @@ object Lists2D {
         var last: List2D<T> = map2D
         do {
             val (changed, next) = update(last)
-            if (changed) return next
+            if (!changed) return next
             last = next
         } while (true)
     }
