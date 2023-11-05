@@ -1,6 +1,6 @@
 package y2021
 
-import common.getOrNull
+import common.Lists2D.getOrNull
 import common.readFileLines
 
 class Day15 {

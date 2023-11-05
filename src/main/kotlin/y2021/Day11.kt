@@ -1,7 +1,7 @@
 package y2021
 
-import common.allNeighbour
-import common.getOrNull
+import common.Lists2D.allNeighbour
+import common.Lists2D.getOrNull
 import common.readFileLines
 
 class Octopus(var energyLevel: Int) {
