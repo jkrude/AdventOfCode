@@ -7,7 +7,7 @@ import common.x2y
 
 object Day23 {
 
-    private enum class Direction {
+    enum class Direction {
         NORTH,
         SOUTH,
         WEST,

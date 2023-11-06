@@ -1,7 +1,7 @@
 package y2020
 
 import arrow.core.MemoizedDeepRecursiveFunction
-import common.reachableFrom
+import common.reachableVerticesFrom
 import common.readFileLines
 import common.toDirectedJGraph
 import org.jgrapht.Graph
@@ -32,7 +32,7 @@ object Day7 {
             rules.associate { (bag, contained) -> bag to contained.map { it.second } }
                 .toDirectedJGraph()
         // minus once to exclude shiny gold itself
-        return graph.reachableFrom("shiny gold").size - 1
+        return graph.reachableVerticesFrom("shiny gold").size - 1
     }
 
 

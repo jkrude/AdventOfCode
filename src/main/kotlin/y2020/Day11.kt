@@ -12,21 +12,21 @@ import common.toCharList2D
 
 object Day11 {
 
-    private fun genericNeighboursEmpty(neighbours: () -> List<Char>): Boolean =
-        neighbours().all { it == 'L' || it == '.' }
+    private fun genericNeighboursEmpty(neighbours: List<Char>): Boolean =
+        neighbours.all { it == 'L' || it == '.' }
 
-    private fun nOccupied(n: Int, neighbours: () -> List<Char>) =
-        neighbours().count { it == '#' } >= n
+    private fun nOccupied(n: Int, neighbours: List<Char>) =
+        neighbours.count { it == '#' } >= n
 
 
     private fun directNeighboursEmpty(seats: List2D<Char>, ij: Pair<Int, Int>): Boolean =
-        genericNeighboursEmpty {
+        genericNeighboursEmpty(
             ij.allNeighbour().mapNotNull { seats.getOrNull(it) }
-        }
+        )
 
 
     private fun fourOccupied(seats: List2D<Char>, ij: Pair<Int, Int>): Boolean =
-        nOccupied(4) { ij.allNeighbour().mapNotNull { seats.getOrNull(it) } }
+        nOccupied(4, ij.allNeighbour().mapNotNull { seats.getOrNull(it) })
 
 
     private fun List2D<Char>.applyRound(
@@ -79,11 +79,11 @@ object Day11 {
     }
 
     private fun visibleNeighboursEmpty(seats: List2D<Char>, ij: Pair<Int, Int>): Boolean =
-        genericNeighboursEmpty { seats.visibleNeighbours(ij) }
+        genericNeighboursEmpty(seats.visibleNeighbours(ij))
 
 
     private fun fiveOccupied(seats: List2D<Char>, ij: Pair<Int, Int>): Boolean =
-        nOccupied(5) { seats.visibleNeighbours(ij) }
+        nOccupied(5, seats.visibleNeighbours(ij))
 
 
     fun partTwo(lines: List<String>): Int {

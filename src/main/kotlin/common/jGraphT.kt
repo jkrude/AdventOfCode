@@ -12,11 +12,8 @@ class LabeledEdge(val label: String) : DefaultEdge() {
     }
 }
 
-fun <Vertex, Edge> Graph<Vertex, Edge>.addEdgeMissingVertex(source: Vertex, target: Vertex) {
-    if (!this.containsVertex(source)) this.addVertex(source)
-    if (!this.containsVertex(target)) this.addVertex(target)
-    this.addEdge(source, target)
-}
+fun <Vertex, Edge> Graph<Vertex, Edge>.addEdgeMissingVertex(source: Vertex, target: Vertex) =
+    this.addEdgeMissingVertex(source, target, this.edgeSupplier.get())
 
 fun <Vertex, Edge> Graph<Vertex, Edge>.addEdgeMissingVertex(source: Vertex, target: Vertex, edge: Edge) {
     if (!this.containsVertex(source)) this.addVertex(source)
@@ -49,7 +46,7 @@ fun <Vertex, E : DefaultEdge> Graph<Vertex, E>.toMermaid(
 }
 
 
-fun <Vertex, Edge> Graph<Vertex, Edge>.reachableFrom(source: Vertex): Set<Vertex> {
+fun <Vertex, Edge> Graph<Vertex, Edge>.reachableVerticesFrom(source: Vertex): Set<Vertex> {
     val reached = mutableSetOf<Vertex>()
     BreadthFirstIterator(this, source).forEach(reached::add)
     return reached
