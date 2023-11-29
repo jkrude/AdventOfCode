@@ -3,3 +3,5 @@ libs/
 out/
 /gradlew
 /gradlew.bat
+/src/main/resources/session.env
+/build/
