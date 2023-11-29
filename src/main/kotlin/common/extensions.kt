@@ -1,24 +1,7 @@
 package common
 
-import arrow.core.identity
 
-fun <X> List<Triple<X, X, X>>.unzip(): Triple<ArrayList<X>, ArrayList<X>, ArrayList<X>> {
-    val (firstList, secondList, thirdList) = fold(
-        listOf(
-            ArrayList<X>(),
-            ArrayList<X>(),
-            ArrayList<X>()
-        )
-    ) { foldingList: List<ArrayList<X>>, triple: Triple<X, X, X> ->
-        foldingList[0].add(triple.first)
-        foldingList[1].add(triple.second)
-        foldingList[2].add(triple.third)
-        foldingList
-    }
-    return Triple(firstList, secondList, thirdList)
-}
-
-fun List<String>.toCharList2D() = this.map { it.map(::identity) }
+fun List<String>.toCharList2D(): List<List<Char>> = this.map { it.toList() }
 
 fun <T, R> Pair<T, T>.map(lambda: (T) -> (R)): Pair<R, R> = lambda(first) to lambda(second)
 fun <T, R> Triple<T, T, T>.map(lambda: (T) -> (R)): Triple<R, R, R> =
@@ -38,6 +21,24 @@ infix fun Int.autoRange(to: Int) = if (this < to) this..to else this downTo to
 operator fun Pair<Int, Int>.rangeTo(to: Pair<Int, Int>) =
     (this.first autoRange to.first).flatMap { x -> (this.second autoRange to.second).map { x to it } }
 
+fun IntRange.extendedBy(symmetric: Int): IntRange {
+    require(symmetric > 0)
+    return (start - symmetric)..(endInclusive + symmetric)
+}
+
+fun IntRange.extendedBy(lower: Int, upper: Int): IntRange {
+    require(lower > 0 && upper > 0)
+    return start - lower..endInclusive + upper
+}
+
 fun <T> Collection<T>.plusElement(supplier: (Collection<T>) -> T): List<T> {
     return this.plusElement(supplier(this))
+}
+
+fun <T> MutableMap<T, Int>.inc(key: T, default: Int = 0) {
+    this[key] = this.getOrDefault(key, default) + 1
+}
+
+fun <T> MutableMap<T, Int>.dec(key: T, default: Int = 0) {
+    this[key] = this.getOrDefault(key, default) - 1
 }
