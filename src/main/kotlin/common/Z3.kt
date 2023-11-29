@@ -52,10 +52,19 @@ class Kontext : Context() {
     infix fun Expr<BoolSort>.or(other: Expr<BoolSort>): BoolExpr = mkOr(this, other)
     infix fun Expr<BoolSort>.implies(other: Expr<BoolSort>): BoolExpr = mkImplies(this, other)
 
-    fun Iterable<Expr<BoolSort>>.all() = this.reduce { x: Expr<BoolSort>, y: Expr<BoolSort> -> mkAnd(x, y) }
+    fun Iterable<Expr<BoolSort>>.all(): Expr<BoolSort> =
+        this.reduce { x: Expr<BoolSort>, y: Expr<BoolSort> -> mkAnd(x, y) }
+
+    fun <T> Iterable<T>.all(transform: (T) -> Expr<BoolSort>): BoolExpr = map(transform).all()
     fun Collection<Expr<BoolSort>>.all(): BoolExpr = mkAnd(*this.toTypedArray())
-    fun Iterable<Expr<BoolSort>>.any() = this.reduce { x: Expr<BoolSort>, y: Expr<BoolSort> -> mkOr(x, y) }
+
+    fun Iterable<Expr<BoolSort>>.any(): Expr<BoolSort> =
+        this.reduce { x: Expr<BoolSort>, y: Expr<BoolSort> -> mkOr(x, y) }
+
+    fun <T> Iterable<T>.any(transform: (T) -> Expr<BoolSort>): Expr<BoolSort> = this.map(transform).any()
+
     fun Collection<Expr<BoolSort>>.any(): BoolExpr = mkOr(*this.toTypedArray())
+    operator fun Expr<BoolSort>.not(): BoolExpr = mkNot(this)
 
 
     /* Comparisons */
@@ -96,33 +105,29 @@ class Kontext : Context() {
     val Int.z3: IntNum
         get() = mkInt(this)
 
-    fun Expr<IntSort>.toIntOrNull() = if (this.isIntNum) (this as IntNum).int else null
-    fun Expr<IntSort>.toLongOrNull() = if (this.isIntNum) (this as IntNum).int64 else null
+    fun Solver.assertUniqueNumbers(
+        symbols: List<IntExpr>,
+        from: Int = 0,
+        toExclusive: Int = symbols.size
+    ) {
+        require(toExclusive - from >= symbols.size)
 
-}
-
-fun Context.assertUniqueNumbers(
-    symbols: List<IntExpr>,
-    from: Int = 0,
-    toExclusive: Int = symbols.size,
-    solver: Solver
-) {
-    require(toExclusive - from >= symbols.size)
-    val fromI = mkInt(from)
-    val toI = mkInt(toExclusive)
-    symbols.forEach {
-        solver.add(mkAnd(mkGe(it, fromI), mkLt(it, toI)))
-    }
-    symbols.forEachIndexed { index, intExpr ->
-        solver.add(
-            mkAnd(
-                *Array(symbols.size) { otherIdx ->
-                    mkOr( // either the index is the same or they are not the same number
-                        mkEq(mkInt(index), mkInt(otherIdx)),
-                        mkNot(mkEq(intExpr, symbols[otherIdx]))
-                    )
+        symbols.forEach { add((it ge from) and (it lt toExclusive)) }
+        symbols.forEachIndexed { index, intExpr ->
+            add(
+                symbols.indices.all { otherIdx ->
+                    // either the index is the same or they are not the same number
+                    (index.z3 eq otherIdx) or !(intExpr eq symbols[otherIdx])
                 }
             )
-        )
+        }
     }
+
 }
+
+
+fun Expr<IntSort>.toIntOrNull() = if (this.isIntNum) (this as IntNum).int else null
+fun Expr<IntSort>.toInt() = this.toIntOrNull() ?: throw IllegalArgumentException("$this")
+fun Expr<IntSort>.toLongOrNull() = if (this.isIntNum) (this as IntNum).int64 else null
+fun Expr<IntSort>.toLong() = this.toLongOrNull() ?: throw IllegalArgumentException("$this")
+
