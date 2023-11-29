@@ -2,7 +2,28 @@ package common
 
 typealias List2D<T> = List<List<T>>
 
+typealias BooleanList2D = List2D<Boolean>
+
 object Lists2D {
+
+    fun of(linesList: List<String>, trueChar: Char = '#', falseChar: Char = '.'): BooleanList2D =
+        linesList.map { line ->
+            line.map { c ->
+                when (c) {
+                    trueChar -> true
+                    falseChar -> false
+                    else -> throw IllegalArgumentException("Found char $c that was neither $trueChar nor $falseChar")
+                }
+            }
+        }
+
+    fun BooleanList2D.print(trueChar: Char = '#', falseChar: Char = '.'): String =
+        print { if (it) trueChar.toString() else falseChar.toString() }
+
+    fun <T> List2D<T>.print(transform: (T) -> String): String =
+        this.joinToString(separator = "\n") {
+            it.joinToString("", transform = transform)
+        }
 
     fun <T> iterateUntilStable(map2D: List2D<T>, update: (List2D<T>) -> List2D<T>): List2D<T> {
         fun updateWithChange(map2D: List2D<T>): Pair<Boolean, List2D<T>> {
@@ -25,10 +46,12 @@ object Lists2D {
     fun <T> List2D<T>.indices2d() =
         this.indices.flatMap { i -> this[i].indices.map { j -> i to j } }
 
-    fun <T> Array<Array<T>>.indices2d() =
-        this.indices.flatMap { i -> this[i].indices.map { j -> i to j } }
+    operator fun <T> List2D<T>.get(i: Int, j: Int) = this[i][j]
 
-    fun <T> List2D<T>.getOrNull(ij: Pair<Int, Int>) = this.getOrNull(ij.first)?.getOrNull(ij.second)
+    fun <T> List2D<T>.getOrNull(i: Int, j: Int) = this.getOrNull(i)?.getOrNull(j)
+
+    fun <T> List2D<T>.getOrNull(ij: Pair<Int, Int>) = this.getOrNull(ij.first, ij.second)
+
     fun Pair<Int, Int>.neighbours(): List<Pair<Int, Int>> = listOf(
         (first + 1) to second,
         (first - 1) to second,
