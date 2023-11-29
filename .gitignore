@@ -1,3 +1,5 @@
 .idea/
 libs/
 out/
+/gradlew
+/gradlew.bat
