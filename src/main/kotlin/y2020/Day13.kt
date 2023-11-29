@@ -5,6 +5,7 @@ import com.microsoft.z3.Status
 import common.Kontext
 import common.math.crt
 import common.readFileLines
+import common.toLong
 
 object Day13 {
 
@@ -45,8 +46,7 @@ object Day13 {
                 solver.add((timeStamp plus offset) % busId eq 0)
                 solver.add(timeStamp eq t + N * mult)
                 check(solver.check() == Status.SATISFIABLE)
-                t = solver.model.eval(timeStamp, false).toLongOrNull()
-                    ?: error("Could not evaluate $timeStamp")
+                t = solver.model.eval(timeStamp, false).toLong()
                 mult *= busId
             }
             return t
