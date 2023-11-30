@@ -1,149 +1,156 @@
 package y2022
 
 import common.*
+import kotlin.math.abs
 import kotlin.math.max
 
 object Day17 {
 
-    sealed class Figure(
-        highestBottom: Int,
-        protected val position: Point2D = 2 x2y (highestBottom + 4)
-    ) {
-        protected abstract val width: Int
-        abstract fun canMoveDown(bottom: Array<Int>): Boolean
-        fun moveLeft() {
-            position.x = max(position.x - 1, 0)
-        }
+    sealed class Figure(highestRock: Int, val pointOffsets: List<Point2D>) {
+        var position: Point2D = (2 x2y initialY(highestRock))
 
-        fun moveRight() {
-            if (position.x + width != 7) position.x++
-        }
+        private fun initialY(highestRock: Int): Int =
+            highestRock + 3 + pointOffsets.maxOf { abs(it.y) }
 
-        abstract fun comeToHalt(bottom: Array<Int>)
+        fun moveLeft() = position.x--
+        fun moveRight() = position.x++
+        fun moveDown() = position.y--
+        fun moveUp() = position.y++
 
-        fun moveDownOrComeToHalt(bottom: Array<Int>): Boolean {
-            require(position.y > 0)
-            val moved = canMoveDown(bottom)
-            if (moved) position.y -= 1
-            else comeToHalt(bottom)
-            return moved
-        }
+        fun points() = pointOffsets.map { position + it }
+        inline fun any(predicate: (Point2D) -> Boolean) = pointOffsets.any { predicate(position + it) }
     }
 
-    class Minus(highestBottom: Int) : Figure(highestBottom) {
-        override val width: Int = 4
-        override fun canMoveDown(bottom: Array<Int>): Boolean {
-            for (i in position.x until (position.x + width)) {
-                if (bottom[i] == position.y - 1) return false
-            }
-            return true
-        }
-
-        override fun comeToHalt(bottom: Array<Int>) {
-            for (i in position.x until (position.x + width)) {
-                bottom[i] = position.y
-            }
-        }
-    }
-
-    class Plus(highestBottom: Int) : Figure(highestBottom) {
-        override val width: Int = 3
-        override fun canMoveDown(bottom: Array<Int>): Boolean {
-            return (bottom[position.x] != position.y) &&
-                    (bottom[position.x + 1] != position.y - 1) &&
-                    (bottom[position.x + 2] != position.y)
-        }
-
-        override fun comeToHalt(bottom: Array<Int>) {
-            // We know that figure can't fall position.y = bottom.max() + 1
-            // with idx of bottom.max()  in position.x until position.x + width
-            bottom[position.x] = position.y + 1
-            bottom[position.x + 1] = position.y + 2
-            bottom[position.x + 2] = position.y + 1
-        }
-    }
-
-    class LShape(highestBottom: Int) : Figure(highestBottom) {
-        override val width: Int = 3
-        override fun canMoveDown(bottom: Array<Int>): Boolean {
-            for (i in position.x until (position.x + width)) {
-                if (bottom[i] == position.y - 1) return false
-            }
-            return true
-        }
-
-        override fun comeToHalt(bottom: Array<Int>) {
-            bottom[position.x] = position.y
-            bottom[position.x + 1] = position.y
-            bottom[position.x + 2] = position.y + 2
-        }
-    }
-
-    class IShape(highestBottom: Int) : Figure(highestBottom) {
-        override val width: Int = 1
-        override fun canMoveDown(bottom: Array<Int>): Boolean =
-            bottom[position.x] != position.y - 1
-
-        override fun comeToHalt(bottom: Array<Int>) {
-            bottom[position.x] = position.y + 3
-        }
-    }
-
-    class Square(highestBottom: Int) : Figure(highestBottom) {
-        override val width: Int = 2
-        override fun canMoveDown(bottom: Array<Int>): Boolean =
-            (bottom[position.x] != (position.y - 1))
-                    || (bottom[position.x + 1] != (position.y - 1))
-
-
-        override fun comeToHalt(bottom: Array<Int>) {
-            bottom[position.x] = position.y + 1
-            bottom[position.x + 1] = position.y + 1
-        }
-    }
-
-    fun figureGenerator(): CyclicIterator<(Int) -> Figure> {
-        return cyclicIteratorOf(
-            listOf(
-                { highestBottom: Int -> Minus(highestBottom) },
-                { highestBottom: Int -> Plus(highestBottom) },
-                { highestBottom: Int -> LShape(highestBottom) },
-                { highestBottom: Int -> IShape(highestBottom) },
-                { highestBottom: Int -> Square(highestBottom) },
-            )
+    class Minus(highestRock: Int) : Figure(
+        highestRock,
+        listOf(
+            0 x2y 0, 1 x2y 0, 2 x2y 0, 3 x2y 0
         )
+    )
+
+    class Plus(highestRock: Int) : Figure(
+        highestRock, listOf(
+            1 x2y 0,
+            0 x2y -1, 1 x2y -1, 2 x2y -1,
+            1 x2y -2
+        )
+    )
+
+    class LShape(highestRock: Int) : Figure(
+        highestRock, listOf(
+            2 x2y 0,
+            2 x2y -1,
+            0 x2y -2, 1 x2y -2, 2 x2y -2,
+        )
+    )
+
+    class IShape(highestRock: Int) : Figure(
+        highestRock, listOf(
+            0 x2y 0,
+            0 x2y -1,
+            0 x2y -2,
+            0 x2y -3
+        )
+    )
+
+    class Square(highestRock: Int) : Figure(
+        highestRock, listOf(
+            0 x2y 0, 1 x2y 0,
+            0 x2y -1, 1 x2y -1
+        )
+    )
+
+    private fun MutableSet<Point2D>.fallDown(
+        figure: Figure,
+        cyclicGasJets: CyclicIterator<Char>,
+        highestRock: Int
+    ): Int {
+        while (true) {
+            val nextMove = cyclicGasJets.next()
+            if (nextMove == '<') figure.moveLeft() else figure.moveRight()
+            if (figure.any { it.x < 0 || it.x > 6 || it in this }) {
+                // Undo operation
+                if (nextMove == '<') figure.moveRight() else figure.moveLeft()
+            }
+            figure.moveDown()
+            if (figure.any { it.y == -1 || it in this }) {
+                figure.moveUp()
+                break
+            }
+        }
+        val finalPositions = figure.points()
+        this.addAll(finalPositions)
+        return max(highestRock, finalPositions.maxOf { it.y })
     }
 
-    fun partOne(gasJetString: String): Int? {
-        /**
-         *
-         */
-        val bottom = Array(7) { 0 }
+    private data class Situation(val ceiling: List<Int>, val gasIdx: Int)
+    private data class Loop(val lastTurn: Long, val lastHeight: Int)
+
+    private fun handleLoop(
+        loop: Loop,
+        currTurn: Long,
+        highestRock: Int,
+        totalTurns: Long
+    ): Pair<Long, Long> {
+        val loopLength = currTurn - loop.lastTurn
+        val loopHeight = highestRock - loop.lastHeight // how much height added by the loop
+        val nowRemaining = totalTurns - currTurn
+        val loopMult: Long = nowRemaining / loopLength
+        val nextTurn: Long = currTurn + loopLength * loopMult
+        return nextTurn to loopHeight * loopMult
+    }
+
+    fun simulate(
+        gasJetString: String,
+        totalTurns: Long
+    ): Long {
+        val map = mutableSetOf<Point2D>()
+
         val cyclicGasJets: CyclicIterator<Char> = cyclicIteratorOf(gasJetString.asIterable())
-        val cyclicFigureGenerator = figureGenerator()
+        val cyclicFigureGenerator = cyclicIteratorOf(listOf(::Minus, ::Plus, ::LShape, ::IShape, ::Square))
+        var highestRock: Int = -1
 
-        fun fallDown() {
-            val figureGenerator = cyclicFigureGenerator.next()
-            val figure: Figure = figureGenerator(bottom.maxOrNull()!!)
-            do {
-                val nextGasJet = cyclicGasJets.next()
-                if (nextGasJet == '<') figure.moveLeft()
-                else figure.moveRight()
-                val movedDown = figure.moveDownOrComeToHalt(bottom)
-            } while (movedDown)
+        val seenSituations = mutableMapOf<Situation, Loop>()
+        var loopHeightAddition = 0L
+        var looped = false
+        var currTurn = 0L
+        while (currTurn < totalTurns) {
+            val figure: Figure = cyclicFigureGenerator.next()(highestRock + 1)
+            if (figure is Minus) {
+                val situation = Situation(map.ceilingPattern(), cyclicGasJets.currentIdx)
+                if (situation in seenSituations && !looped) {
+                    val (nextTurn, addedHeight) = handleLoop(
+                        seenSituations.getValue(situation),
+                        currTurn,
+                        highestRock,
+                        totalTurns
+                    )
+                    currTurn = nextTurn
+                    loopHeightAddition = addedHeight
+                    looped = true
+                } else seenSituations[situation] = Loop(currTurn, highestRock)
+            }
+            highestRock = map.fallDown(figure, cyclicGasJets, highestRock)
+            currTurn++
         }
 
-        repeat(2022) {
-            fallDown()
-        }
-        return bottom.maxOrNull()
-
+        return highestRock + 1 + loopHeightAddition
     }
 
-    fun partTwo(lines: List<String>): Int = TODO()
+    private fun MutableSet<Point2D>.ceilingPattern(): List<Int> {
+        val bottom = (0 until 7).map { x ->
+            filter { it.x == x }.maxOfOrNull { it.y } ?: 0
+        }
+        val lowestPoint = bottom.minOf { it }
+        return bottom.map { it - lowestPoint } // normalize to zero
+    }
+
+    fun partOne(gasJetString: String) = simulate(gasJetString, 2022)
+
+    fun partTwo(gasJetString: String): Long = simulate(gasJetString, 1000000000000L)
 }
 
 fun main() {
-    println(Day17.partOne(readFileLines(1, 20227).first()))
-    println(Day17.partTwo(readFileLines(1, 20227)))
+    println(Day17.partOne(readFileText(17, 2022)))
+    println(Day17.partTwo(readFileText(17, 2022)))
 }

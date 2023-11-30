@@ -1,5 +1,7 @@
 package common
 
+import kotlin.math.max
+
 typealias List2D<T> = List<List<T>>
 
 typealias BooleanList2D = List2D<Boolean>
@@ -24,6 +26,25 @@ object Lists2D {
         this.joinToString(separator = "\n") {
             it.joinToString("", transform = transform)
         }
+
+    fun Set<Point2D>.printAsMap(
+        present: Char = '#',
+        empty: Char = '.',
+        minWidth: Int? = null,
+        minHeight: Int? = null
+    ): String {
+        val maxY = this.maxOf { it.y }.let { if (minHeight == null) it else max(minHeight, it) }
+        val maxX = this.maxOf { it.x }.let { if (minWidth == null) it else max(minWidth, it) }
+        val stringBuilder = StringBuilder()
+        for (y in maxY downTo 0) {
+            for (x in 0..maxX) {
+                if (Point2D(x, y) in this) stringBuilder.append(present)
+                else stringBuilder.append(empty)
+                if (x == maxX) stringBuilder.append("\n")
+            }
+        }
+        return stringBuilder.toString()
+    }
 
     fun <T> iterateUntilStable(map2D: List2D<T>, update: (List2D<T>) -> List2D<T>): List2D<T> {
         fun updateWithChange(map2D: List2D<T>): Pair<Boolean, List2D<T>> {
