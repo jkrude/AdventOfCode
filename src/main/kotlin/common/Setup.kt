@@ -120,5 +120,5 @@ object Setup {
 }
 
 fun main() {
-    Setup.forDate(20, year = 2020, readLines = false)
+    Setup.forToday()
 }

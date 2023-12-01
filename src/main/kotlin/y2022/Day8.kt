@@ -1,6 +1,6 @@
 package y2022
 
-import common.Lists2D.indices2d
+import common.extensions.Lists2D.indices2d
 import common.readFileLines
 
 class Day8 {

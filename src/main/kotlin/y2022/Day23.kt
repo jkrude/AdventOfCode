@@ -1,7 +1,7 @@
 package y2022
 
 import common.Point2D
-import common.onlyUnique
+import common.extensions.onlyUnique
 import common.readFileLines
 import common.x2y
 

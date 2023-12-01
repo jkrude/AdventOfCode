@@ -1,6 +1,6 @@
 package y2022
 
-import common.map
+import common.extensions.map
 import common.readFileText
 
 class Day13 {

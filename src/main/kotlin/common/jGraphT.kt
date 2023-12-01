@@ -8,7 +8,7 @@ import org.jgrapht.traverse.BreadthFirstIterator
 
 class LabeledEdge(val label: String) : DefaultEdge() {
     override fun toString(): String {
-        return "($source : $target : $label)"
+        return "($source -> $target : $label)"
     }
 }
 

@@ -1,6 +1,6 @@
 package y2021
 
-import common.rangeTo
+import common.extensions.rangeTo
 import kotlin.math.min
 
 class Day17 {

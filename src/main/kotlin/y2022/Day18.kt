@@ -1,8 +1,8 @@
 package y2022
 
 import common.algorithms.Search
+import common.extensions.runIfTrue
 import common.readFileLines
-import common.runIfTrue
 
 private typealias Point3D = Triple<Int, Int, Int>
 

@@ -1,6 +1,6 @@
 package y2020
 
-import common.plusElement
+import common.extensions.plusElement
 import common.readFileLines
 import kotlin.math.abs
 

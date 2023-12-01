@@ -4,8 +4,8 @@
 
 - Who needs readability if the answer is short, right? Right?
 
-| Day | Solved | Nice solution |
-|-----|--------|--------|
+| Day                                                                                   | Solved | Nice solution      |
+|---------------------------------------------------------------------------------------|--------|--------------------|
 | [1](https://github.com/jkrude/AdventOfCode2021/blob/master/src/main/kotlin/Day1.kt)   | :star: | :heavy_check_mark: |
 | 2                                                                                     | :star: |                    |
 | [3](https://github.com/jkrude/AdventOfCode2021/blob/master/src/main/kotlin/Day3.kt)   | :star: | :heavy_check_mark: |
@@ -18,13 +18,13 @@
 | 10                                                                                    | :star: |                    |
 | 11                                                                                    | :star: |                    |
 | 12                                                                                    | :star: |                    |
-| [13](https://github.com/jkrude/AdventOfCode2021/blob/master/src/main/kotlin/Day13.kt)                                                                                    | :star: | :heavy_check_mark: |
+| [13](https://github.com/jkrude/AdventOfCode2021/blob/master/src/main/kotlin/Day13.kt) | :star: | :heavy_check_mark: |
 | 14                                                                                    | :star: |                    |
 | 15                                                                                    |        |                    |
 | 16                                                                                    |        |                    |
 | 17                                                                                    | :star: |                    |
 
-# Interesting findings
+# Nicer Solutions
 
 ## Day 7
 
@@ -49,3 +49,7 @@ Example:
       added
 - X = [0,1] -> 0, 1, 0.5 are optima
     - It doesnt make a difference if you move 0 by one or 1 by one or both (2*) by 0.5
+
+## Day 13
+
+- We can directly project points without having to simulate the steps given the size of the final paper

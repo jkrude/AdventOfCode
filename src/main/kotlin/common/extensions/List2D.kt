@@ -1,5 +1,6 @@
-package common
+package common.extensions
 
+import common.Point2D
 import kotlin.math.max
 
 typealias List2D<T> = List<List<T>>
@@ -73,29 +74,6 @@ object Lists2D {
 
     fun <T> List2D<T>.getOrNull(ij: Pair<Int, Int>) = this.getOrNull(ij.first, ij.second)
 
-    fun Pair<Int, Int>.neighbours(): List<Pair<Int, Int>> = listOf(
-        (first + 1) to second,
-        (first - 1) to second,
-        first to (second + 1),
-        first to (second - 1)
-    )
-
-    fun Pair<Int, Int>.allNeighbour(): List<Pair<Int, Int>> {
-        val (i, j) = this
-        return listOf(
-            (i + 1 to j + 1),
-            (i + 1 to j),
-            (i + 1 to j - 1),
-            (i to j + 1),
-            (i to j - 1),
-            (i - 1 to j - 1),
-            (i - 1 to j),
-            (i - 1 to j + 1)
-        )
-    }
-
-    operator fun Pair<Int, Int>.plus(pair: Pair<Int, Int>) = (first + pair.first) to (second + pair.second)
-    operator fun Pair<Int, Int>.minus(pair: Pair<Int, Int>) = (first - pair.first) to (second - pair.second)
     operator fun <T> List2D<T>.get(ij: Pair<Int, Int>): T = this[ij.first][ij.second]
     fun <T, V> List2D<T>.map2DIndexed(transform: (Pair<Int, Int>, T) -> V): List2D<V> {
         return this.mapIndexed { i, ts ->

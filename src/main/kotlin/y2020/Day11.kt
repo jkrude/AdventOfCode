@@ -1,14 +1,10 @@
 package y2020
 
-import common.List2D
-import common.Lists2D.allNeighbour
-import common.Lists2D.getOrNull
-import common.Lists2D.iterateUntilNoChange
-import common.Lists2D.map2DIndexed
-import common.Lists2D.plus
-import common.map
+import common.extensions.*
+import common.extensions.Lists2D.getOrNull
+import common.extensions.Lists2D.iterateUntilNoChange
+import common.extensions.Lists2D.map2DIndexed
 import common.readFileLines
-import common.toCharList2D
 
 object Day11 {
 

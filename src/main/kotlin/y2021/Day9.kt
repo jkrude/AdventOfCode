@@ -1,8 +1,8 @@
 package y2021
 
-import common.Lists2D.getOrNull
-import common.Lists2D.indices2d
-import common.Lists2D.neighbours
+import common.extensions.Lists2D.getOrNull
+import common.extensions.Lists2D.indices2d
+import common.extensions.neighbours
 import common.readFileLines
 
 class Day9 {

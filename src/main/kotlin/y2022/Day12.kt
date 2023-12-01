@@ -1,9 +1,9 @@
 package y2022
 
-import common.Lists2D.get
-import common.Lists2D.indices2d
-import common.Lists2D.neighbours
 import common.algorithms.Dijkstra
+import common.extensions.Lists2D.get
+import common.extensions.Lists2D.indices2d
+import common.extensions.neighbours
 import common.readFileLines
 
 class Day12 {
