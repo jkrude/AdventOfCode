@@ -17,3 +17,5 @@ fun <T> MutableMap<T, Int>.inc(key: T, default: Int = 0) {
 fun <T> MutableMap<T, Int>.dec(key: T, default: Int = 0) {
     this[key] = this.getOrDefault(key, default) - 1
 }
+
+fun Iterable<Long>.product(): Long = this.reduce { acc, t -> acc * t }
