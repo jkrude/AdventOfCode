@@ -1,6 +1,5 @@
 .idea/
-libs/
-out/
+.gradle
 /gradlew
 /gradlew.bat
 /src/main/resources/session.env
