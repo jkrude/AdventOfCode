@@ -17,7 +17,13 @@ internal class Day1Test {
 
     @Test
     internal fun partOne() {
-        //assertEquals(L, y2023.Day1.partOne(testData))
+        val partOneTest = """
+         1abc2
+         pqr3stu8vwx
+         a1b2c3d4e5f
+         treb7uchet
+        """.trimIndent().lines()
+        assertEquals(142, y2023.Day1.partOne(partOneTest))
     }
 
     @Test
