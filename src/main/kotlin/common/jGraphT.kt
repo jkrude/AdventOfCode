@@ -1,6 +1,7 @@
 package common
 
 import org.jgrapht.Graph
+import org.jgrapht.Graphs
 import org.jgrapht.graph.DefaultDirectedGraph
 import org.jgrapht.graph.DefaultEdge
 import org.jgrapht.graph.DirectedPseudograph
@@ -50,6 +51,10 @@ fun <Vertex, Edge> Graph<Vertex, Edge>.reachableVerticesFrom(source: Vertex): Se
     val reached = mutableSetOf<Vertex>()
     BreadthFirstIterator(this, source).forEach(reached::add)
     return reached
+}
+
+fun <Vertex, Edge, G : Graph<Vertex, Edge>> G.neighborsOf(vertex: Vertex): Set<Vertex> {
+    return Graphs.neighborSetOf(this, vertex)
 }
 
 fun <V> Map<V, Iterable<V>>.toDirectedJGraph(): DefaultDirectedGraph<V, DefaultEdge> {
