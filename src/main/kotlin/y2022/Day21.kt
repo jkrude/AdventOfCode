@@ -1,5 +1,6 @@
 package y2022
 
+import common.extensions.findGroupValues
 import common.readFileLines
 
 object Day21 {
@@ -35,8 +36,7 @@ object Day21 {
 
     private val complexRightSidePattern = """(\w+) ([+\-*/]) (\w+)""".toRegex()
     private fun decomposeRightSide(rightSide: String): Triple<String, Char, String> {
-        val (leftName, opString, rightName) = complexRightSidePattern.find(rightSide)?.groupValues?.drop(1)
-            ?: throw IllegalArgumentException(rightSide)
+        val (leftName, opString, rightName) = complexRightSidePattern.findGroupValues(rightSide)
         require(opString.length == 1)
         return Triple(leftName, opString.first(), rightName)
     }

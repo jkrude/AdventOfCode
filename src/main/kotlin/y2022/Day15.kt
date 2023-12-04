@@ -1,6 +1,7 @@
 package y2022
 
 import common.Point2D
+import common.extensions.findGroupValues
 import common.readFileLines
 import common.x2y
 import java.util.concurrent.*
@@ -15,8 +16,7 @@ object Day15 {
         val pattern = """Sensor at x=(-?\d+), y=(-?\d+): closest beacon is at x=(-?\d+), y=(-?\d+)"""
             .toRegex()
         return lines.map { line ->
-            val (x1, y1, x2, y2) = pattern.find(line)?.groupValues?.drop(1)?.map { it.toInt() }
-                ?: throw IllegalArgumentException(line)
+            val (x1, y1, x2, y2) = pattern.findGroupValues(line).map(String::toInt)
             (x1 x2y y1) to (x2 x2y y2)
         }
     }

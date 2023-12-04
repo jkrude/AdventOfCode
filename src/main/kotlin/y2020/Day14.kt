@@ -1,5 +1,6 @@
 package y2020
 
+import common.extensions.findGroupValues
 import common.readFileLines
 
 object Day14 {
@@ -30,8 +31,7 @@ object Day14 {
                 bitMask = op
                 continue
             }
-            val (address, nbr) = r.find(op)?.groupValues?.drop(1)?.map { it.toULong() }
-                ?: throw IllegalArgumentException(op)
+            val (address, nbr) = r.findGroupValues(op).map { it.toULong() }
             mem[address] = nbr.applyBitmask(bitMask)
         }
         return mem.values.sum()
@@ -49,8 +49,7 @@ object Day14 {
                 bitMask = parseMaskLine(op)
                 continue
             }
-            val (address, nbr) = r.find(op)?.groupValues?.drop(1)?.map { it.toULong() }
-                ?: throw IllegalArgumentException(op)
+            val (address, nbr) = r.findGroupValues(op).map { it.toULong() }
             storeWithBitMask(mem, address, nbr, bitMask)
         }
         return mem.values.sum()

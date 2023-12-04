@@ -3,6 +3,7 @@ package y2020
 import com.microsoft.z3.IntExpr
 import com.microsoft.z3.Status
 import common.Kontext
+import common.extensions.findGroupValues
 import common.readFileText
 import common.toInt
 
@@ -16,7 +17,7 @@ object Day16 {
 
     fun parseRule(ruleStr: String): Rule {
         val r = Regex("""(\w+ ?\w+?): (\d+)-(\d+) or (\d+)-(\d+)""")
-        val (name, r1, r2, r3, r4) = r.find(ruleStr)?.groupValues?.drop(1) ?: throw IllegalArgumentException(ruleStr)
+        val (name, r1, r2, r3, r4) = r.findGroupValues(ruleStr)
         return Rule(name, listOf(r1.toInt()..r2.toInt(), r3.toInt()..r4.toInt()))
     }
 

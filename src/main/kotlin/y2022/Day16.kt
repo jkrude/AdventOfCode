@@ -1,6 +1,7 @@
 package y2022
 
 import common.algorithms.permutations
+import common.extensions.findGroupValues
 import common.readFileLines
 import kotlin.math.max
 
@@ -12,8 +13,7 @@ object Day16 {
         val valveFlow = mutableMapOf<String, Int>()
         val edges = mutableMapOf<String, List<String>>()
         lines.forEach {
-            val groups = pattern.find(it)?.groupValues ?: throw IllegalArgumentException(it)
-            val (valve, flow, next) = groups.drop(1)
+            val (valve, flow, next) = pattern.findGroupValues(it)
             valveFlow[valve] = flow.toInt()
             edges[valve] = next.split(", ")
         }

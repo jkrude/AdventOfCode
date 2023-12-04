@@ -1,6 +1,7 @@
 package y2020
 
 import arrow.core.MemoizedDeepRecursiveFunction
+import common.extensions.findGroupValues
 import common.reachableVerticesFrom
 import common.readFileLines
 import common.toDirectedJGraph
@@ -15,8 +16,7 @@ object Day7 {
     private val rightSideRegex = Regex("""(\d) (\w+ \w+) bags?""")
 
     fun parseRule(rule: String): Rule {
-        val (left, containedStr) = regex.find(rule)?.groupValues?.drop(1)
-            ?: throw IllegalArgumentException("Could not parse $rule")
+        val (left, containedStr) = regex.findGroupValues(rule)
         if (containedStr == "no other bags") return Rule(left, emptyList())
         val contained: Sequence<List<String>> = rightSideRegex.findAll(containedStr).map { it.groupValues.drop(1) }
         return Rule(left, contained.map { (amtStr, color) -> amtStr.toInt() to color }.toList())

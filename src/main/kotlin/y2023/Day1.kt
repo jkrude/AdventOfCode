@@ -1,7 +1,7 @@
 package y2023
 
+import common.extensions.findOverlapping
 import common.extensions.map
-import common.findOverlapping
 import common.readFileLines
 
 object Day1 {

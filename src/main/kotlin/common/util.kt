@@ -1,6 +1,7 @@
 package common
 
 import java.io.File
+import kotlin.math.max
 
 
 fun readFileLines(day: Int, year: Int): List<String> = readFile(day, year).readLines()
@@ -9,14 +10,9 @@ fun readFile(day: Int, year: Int): File =
 
 fun readFileText(day: Int, year: Int): String = readFile(day, year).readText()
 
-fun Regex.findOverlapping(text: String, startIndex: Int = 0): MutableList<String> {
-    val allMatches = mutableListOf<String>()
-    var i = startIndex
-    do {
-        val match = find(text, i) ?: break
-        i = match.range.first + 1
-        allMatches.add(match.value);
-    } while (true);
-    return allMatches
-
+fun maxNullable(left: Int?, right: Int?) = when {
+    left == null && right != null -> right
+    left != null && right == null -> left
+    left != null && right != null -> max(left, right)
+    else -> throw IllegalArgumentException("Both left and right where null")
 }
