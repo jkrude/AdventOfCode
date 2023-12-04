@@ -1,5 +1,6 @@
 package y2021
 
+import common.extensions.Idx2D
 import common.extensions.Lists2D.getOrNull
 import common.extensions.Lists2D.indices2d
 import common.extensions.neighbours
@@ -14,12 +15,12 @@ class Day9 {
             fileLines.map { it.map { c -> c.digitToInt() } }
 
         // local minimum if all y2021.neighbours are greater
-        private fun List<List<Int>>.isLocalMin(ij: Pair<Int, Int>): Boolean =
+        private fun List<List<Int>>.isLocalMin(ij: Idx2D): Boolean =
             (ij).neighbours().all { this[ij.first][ij.second] < (this.getOrNull(it) ?: Int.MAX_VALUE) }
 
-        private fun List<List<Int>>.getBasinSize(localMin: Pair<Int, Int>): Int {
+        private fun List<List<Int>>.getBasinSize(localMin: Idx2D): Int {
             // idea of recursive flood fill with 4 y2021.neighbours
-            fun getBasinSizeRec(ij: Pair<Int, Int>, comp: Int, visited: MutableSet<Pair<Int, Int>>): Int {
+            fun getBasinSizeRec(ij: Idx2D, comp: Int, visited: MutableSet<Idx2D>): Int {
                 val curr: Int = this.getOrNull(ij) ?: return 0
                 if (ij in visited || curr == 9) return 0
                 if (curr >= comp) {

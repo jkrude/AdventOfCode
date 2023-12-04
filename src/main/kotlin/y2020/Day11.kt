@@ -15,19 +15,19 @@ object Day11 {
         neighbours.count { it == '#' } >= n
 
 
-    private fun directNeighboursEmpty(seats: List2D<Char>, ij: Pair<Int, Int>): Boolean =
+    private fun directNeighboursEmpty(seats: List2D<Char>, ij: Idx2D): Boolean =
         genericNeighboursEmpty(
             ij.allNeighbour().mapNotNull { seats.getOrNull(it) }
         )
 
 
-    private fun fourOccupied(seats: List2D<Char>, ij: Pair<Int, Int>): Boolean =
+    private fun fourOccupied(seats: List2D<Char>, ij: Idx2D): Boolean =
         nOccupied(4, ij.allNeighbour().mapNotNull { seats.getOrNull(it) })
 
 
     private fun List2D<Char>.applyRound(
-        neighboursEmpty: (List2D<Char>, ij: Pair<Int, Int>) -> Boolean,
-        occupied: (List2D<Char>, ij: Pair<Int, Int>) -> Boolean,
+        neighboursEmpty: (List2D<Char>, ij: Idx2D) -> Boolean,
+        occupied: (List2D<Char>, ij: Idx2D) -> Boolean,
     ): Pair<Boolean, List<List<Char>>> {
         var changed = false
         val next = this.map2DIndexed { ij, place ->
@@ -74,11 +74,11 @@ object Day11 {
         return directions.mapNotNull { this.firstVisibleOrNull(it, ij) }
     }
 
-    private fun visibleNeighboursEmpty(seats: List2D<Char>, ij: Pair<Int, Int>): Boolean =
+    private fun visibleNeighboursEmpty(seats: List2D<Char>, ij: Idx2D): Boolean =
         genericNeighboursEmpty(seats.visibleNeighbours(ij))
 
 
-    private fun fiveOccupied(seats: List2D<Char>, ij: Pair<Int, Int>): Boolean =
+    private fun fiveOccupied(seats: List2D<Char>, ij: Idx2D): Boolean =
         nOccupied(5, seats.visibleNeighbours(ij))
 
 

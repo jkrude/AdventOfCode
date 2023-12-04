@@ -1,5 +1,6 @@
 package y2021
 
+import common.extensions.Idx2D
 import common.extensions.Lists2D.getOrNull
 import common.extensions.allNeighbour
 import common.readFileLines
@@ -32,10 +33,10 @@ class Day11 {
         fun parse(input: List<String> = readFileLines(1, 20211)) =
             input.map { it.map { c -> Octopus(c.digitToInt()) } }
 
-        private fun <T> List<List<T>>.iterate2D(): List<Pair<Int, Int>> =
+        private fun <T> List<List<T>>.iterate2D(): List<Idx2D> =
             this.indices.flatMap { i -> this[i].indices.map { j -> i to j } }
 
-        private fun List<List<Octopus>>.update(idx2D: Pair<Int, Int>) {
+        private fun List<List<Octopus>>.update(idx2D: Idx2D) {
             if (this.getOrNull(idx2D)?.inc() == true) {
                 idx2D.allNeighbour().forEach { this.update(it) }
             }

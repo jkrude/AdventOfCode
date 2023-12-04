@@ -4,7 +4,7 @@ import common.Point2D
 import kotlin.math.max
 
 typealias List2D<T> = List<List<T>>
-
+typealias Idx2D = Pair<Int, Int>
 typealias BooleanList2D = List2D<Boolean>
 
 object Lists2D {
@@ -72,10 +72,10 @@ object Lists2D {
 
     fun <T> List2D<T>.getOrNull(i: Int, j: Int) = this.getOrNull(i)?.getOrNull(j)
 
-    fun <T> List2D<T>.getOrNull(ij: Pair<Int, Int>) = this.getOrNull(ij.first, ij.second)
+    fun <T> List2D<T>.getOrNull(ij: Idx2D) = this.getOrNull(ij.first, ij.second)
 
-    operator fun <T> List2D<T>.get(ij: Pair<Int, Int>): T = this[ij.first][ij.second]
-    fun <T, V> List2D<T>.map2DIndexed(transform: (Pair<Int, Int>, T) -> V): List2D<V> {
+    operator fun <T> List2D<T>.get(ij: Idx2D): T = this[ij.first][ij.second]
+    fun <T, V> List2D<T>.map2DIndexed(transform: (Idx2D, T) -> V): List2D<V> {
         return this.mapIndexed { i, ts ->
             ts.mapIndexed { j, t ->
                 transform(i to j, t)

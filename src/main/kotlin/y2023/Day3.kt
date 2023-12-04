@@ -1,5 +1,6 @@
 package y2023
 
+import common.extensions.Idx2D
 import common.extensions.allNeighbour
 import common.extensions.product
 import common.neighborsOf
@@ -14,10 +15,10 @@ private fun String.isNum(): Boolean {
 
 object Day3 {
 
-    data class Node(val symbol: String, val indices: List<Pair<Int, Int>>) {
+    data class Node(val symbol: String, val indices: List<Idx2D>) {
         fun isNumber() = symbol.isNum()
 
-        fun adjacentIn(lookupMap: Map<Pair<Int, Int>, Node>): List<Node> =
+        fun adjacentIn(lookupMap: Map<Idx2D, Node>): List<Node> =
             indices.flatMap { it.allNeighbour() }
                 .toSet()
                 .mapNotNull { ij -> lookupMap[ij] }
@@ -25,7 +26,7 @@ object Day3 {
 
 
     private val regex = Regex("""(\d+|[^\.])""")
-    private fun parseLine(rowIdx: Int, line: String, lookupMap: MutableMap<Pair<Int, Int>, Node>) {
+    private fun parseLine(rowIdx: Int, line: String, lookupMap: MutableMap<Idx2D, Node>) {
         val symbolsToIndices: Sequence<Pair<String, IntRange>> = regex.findAll(line).map { it.value to it.range }
         val nodes: Sequence<Node> = symbolsToIndices.map { Node(it.first, it.second.map { j -> rowIdx to j }) }
         nodes.forEach { node -> node.indices.forEach { lookupMap[it] = node } }
