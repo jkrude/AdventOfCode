@@ -7,7 +7,7 @@ class Day9 {
     companion object {
 
         // Figure out the number of unique positions the tails visited
-        fun partOne(instructions: List<String>, tailLength: Int): Int {
+        private fun solve(instructions: List<String>, tailLength: Int): Int {
             var posHead = (15 to 11)
 
             val tailPositions = Array(tailLength) { posHead }
@@ -66,27 +66,19 @@ class Day9 {
             }
             return x to y
         }
+
+        fun partOne(lines: List<String>) = solve(lines, 1)
+        fun partTwo(lines: List<String>) = solve(lines, 9)
     }
+
 }
 
 private fun Pair<Int, Int>.touches(posTail: Pair<Int, Int>): Boolean =
     abs(this.first - posTail.first) <= 1 && abs(this.second - posTail.second) <= 1
 
 
-private operator fun Pair<Int, Int>.plus(pair: Pair<Int, Int>): Pair<Int, Int> {
-    return (this.first + pair.first) to (this.second + pair.second)
-}
-
 fun main() {
-    val testData = """
-       R 5
-       U 8
-       L 8
-       D 3
-       R 17
-       D 10
-       L 25
-       U 20
-    """.trimIndent().lines()
-    println(Day9.partOne(readFileLines(9, 2022), 9))
+    val input = readFileLines(9, 2022)
+    println(Day9.partOne(input))
+    println(Day9.partTwo(input))
 }

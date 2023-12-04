@@ -8,9 +8,6 @@ import common.x2y
 import kotlin.math.max
 import kotlin.math.min
 
-private operator fun Pair<Int, Int>.plus(pair: Pair<Int, Int>): Pair<Int, Int> =
-    (this.first + pair.first) to (this.second + pair.second)
-
 private operator fun Pair<Point2D, Point2D>.contains(xy: Point2D): Boolean {
     val (from, to) = this
     val (x, y) = xy
@@ -165,6 +162,6 @@ class Day14 {
 }
 
 fun main() {
-    println(Day14.partOne(readFileLines(1, 20224)))
-    println(Day14.partTwo(readFileLines(1, 20224)))
+    println(Day14.partOne(readFileLines(14, 2022)))
+    println(Day14.partTwo(readFileLines(14, 2022)))
 }
