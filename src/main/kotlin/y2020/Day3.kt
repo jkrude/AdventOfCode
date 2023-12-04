@@ -1,6 +1,7 @@
 package y2020
 
 import common.Point2D
+import common.extensions.productOf
 import common.readFileLines
 
 object Day3 {
@@ -46,8 +47,7 @@ object Day3 {
     fun partTwo(lines: List<String>): Long =
         TreeMap(lines).run {
             listOf(1 to 1, 3 to 1, 5 to 1, 7 to 1, 1 to 2)
-                .map { (right, down) -> this.treesEncountered(right, down).toLong() }
-                .reduce { acc, i -> acc * i }
+                .productOf { (right, down) -> this.treesEncountered(right, down).toLong() }
         }
 }
 

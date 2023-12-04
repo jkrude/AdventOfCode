@@ -4,6 +4,7 @@ import com.microsoft.z3.IntExpr
 import com.microsoft.z3.Status
 import common.Kontext
 import common.extensions.findGroupValues
+import common.extensions.productOf
 import common.readFileText
 import common.toInt
 
@@ -85,8 +86,7 @@ object Day16 {
             .withIndex()
             .filter { it.value.startsWith("departure") }
             .map { rulePositions[it.index] }
-        return relevantPositions.map { ticket[it].toLong() }
-            .reduce { acc, i -> acc * i }
+        return relevantPositions.productOf { ticket[it].toLong() }
     }
 }
 

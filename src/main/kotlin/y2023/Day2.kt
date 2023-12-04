@@ -1,7 +1,7 @@
 package y2023
 
 import common.extensions.List2D
-import common.extensions.product
+import common.extensions.productOf
 import common.readFileLines
 
 object Day2 {
@@ -40,7 +40,7 @@ object Day2 {
             set.flatten()
                 .groupBy { it.color }
                 .mapValues { (_, values) -> values.maxOf { it.amount } }
-                .values.map { it.toLong() }.product()
+                .values.productOf(Int::toLong)
 
         return lines.map { parse(it) }.sumOf { game ->
             powerOfSubset(game.subsets)

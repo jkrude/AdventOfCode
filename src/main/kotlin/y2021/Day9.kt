@@ -3,6 +3,7 @@ package y2021
 import common.extensions.Lists2D.getOrNull
 import common.extensions.Lists2D.indices2d
 import common.extensions.neighbours
+import common.extensions.product
 import common.readFileLines
 
 class Day9 {
@@ -41,8 +42,9 @@ class Day9 {
             heightMap.indices2d()
                 .filter { heightMap.isLocalMin(it) }
                 .map { heightMap.getBasinSize(it) }
-                .sortedDescending().subList(0, 3)
-                .reduce { acc, i -> acc * i }
+                .sortedDescending()
+                .subList(0, 3)
+                .product()
     }
 }
 

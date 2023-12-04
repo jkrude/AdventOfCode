@@ -1,5 +1,7 @@
 package common.math
 
+import common.extensions.productOf
+
 /**
  * Based on the Java-implementation from Gregory Owen
  * https://github.com/GregOwen/Chinese-Remainder-Theorem/blob/master/CRT.java
@@ -55,7 +57,7 @@ fun crt(input: List<Pair<Int, Int>>): Long {
     val (constraints: List<Int>, mods: List<Int>) = input.unzip()
 
     //prodOfMods is the product of the mods
-    val prodOfMods: Long = mods.map { it.toLong() }.reduce { acc, l -> acc * l }
+    val prodOfMods: Long = mods.productOf(Int::toLong)
     val multInv = LongArray(constraints.size) { i ->
         euclidean(prodOfMods / mods[i], mods[i].toLong()).first
     }
