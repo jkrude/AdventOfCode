@@ -24,6 +24,11 @@ fun Pair<Int, Int>.neighbours(): List<Pair<Int, Int>> = listOf(
 )
 
 fun <T, R> Pair<T, T>.map(lambda: (T) -> (R)): Pair<R, R> = lambda(first) to lambda(second)
+
+fun <T> Pair<T, T>.forBoth(lambda: (T) -> Unit) {
+    lambda(first)
+    lambda(second)
+}
 fun <T, R> Triple<T, T, T>.map(lambda: (T) -> (R)): Triple<R, R, R> =
     Triple(lambda(first), lambda(second), lambda(third))
 
