@@ -9,7 +9,6 @@ class Kontext : Context() {
 
     /* Primitive math */
 
-
     /* Plus */
     infix operator fun <R : ArithSort> ArithExpr<out R>.plus(other: ArithExpr<out R>): ArithExpr<R> = mkAdd(this, other)
     infix operator fun <R : IntSort> ArithExpr<out R>.plus(other: Int): ArithExpr<IntSort> = mkAdd(this, mkInt(other))
@@ -61,7 +60,7 @@ class Kontext : Context() {
     fun Iterable<Expr<BoolSort>>.any(): Expr<BoolSort> =
         this.reduce { x: Expr<BoolSort>, y: Expr<BoolSort> -> mkOr(x, y) }
 
-    fun <T> Iterable<T>.any(transform: (T) -> Expr<BoolSort>): Expr<BoolSort> = this.map(transform).any()
+    fun <T> Iterable<T>.any(transform: (T) -> Expr<BoolSort>): BoolExpr = this.map(transform).any()
 
     fun Collection<Expr<BoolSort>>.any(): BoolExpr = mkOr(*this.toTypedArray())
     operator fun Expr<BoolSort>.not(): BoolExpr = mkNot(this)
@@ -123,8 +122,21 @@ class Kontext : Context() {
         }
     }
 
+    fun mkIntConstInRange(name: String, intRange: IntRange, assert: (BoolExpr) -> Unit): IntExpr {
+        val i = mkIntConst(name)
+        assert(i ge intRange.first)
+        assert(i le intRange.last)
+        return i
+    }
+
+    fun List<ArithExpr<IntSort>>.sum(): ArithExpr<IntSort> = this.reduce { acc, other -> acc plus other }
+
 }
 
+fun Optimize.add(vararg expr: BoolExpr) = this.Add(*expr)
+fun Optimize.check(vararg expr: BoolExpr): Status = this.Check(*expr)
+fun <R : Sort> Optimize.maximize(expr: Expr<R>): Optimize.Handle<R> = this.MkMaximize(expr)
+fun <R : Sort> Optimize.minimize(expr: Expr<R>): Optimize.Handle<R> = this.MkMinimize(expr)
 
 fun Expr<IntSort>.toIntOrNull() = if (this.isIntNum) (this as IntNum).int else null
 fun Expr<IntSort>.toInt() = this.toIntOrNull() ?: throw IllegalArgumentException("$this")
