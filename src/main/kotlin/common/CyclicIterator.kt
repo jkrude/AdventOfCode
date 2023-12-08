@@ -1,9 +1,9 @@
 package common
 
-class CyclicIterator<T>(iterable: Iterable<T>) : Iterator<T> {
+class CyclicIterator<T>(iterable: Iterable<T>, startIdx: Int = 0) : Iterator<T>, Cloneable {
 
     private val underlyingData = iterable.toList()
-    private var _currentIdx = 0
+    private var _currentIdx = startIdx
     val currentIdx get() = _currentIdx
 
     override fun hasNext(): Boolean = underlyingData.isNotEmpty()
@@ -13,6 +13,8 @@ class CyclicIterator<T>(iterable: Iterable<T>) : Iterator<T> {
             _currentIdx = if (_currentIdx == underlyingData.lastIndex) 0 else _currentIdx + 1
         }
     }
+    public override fun clone() = CyclicIterator(underlyingData)
+
 }
 
 fun <T> cyclicIteratorOf(iterable: Iterable<T>): CyclicIterator<T> {
