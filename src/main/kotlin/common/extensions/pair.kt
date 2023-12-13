@@ -1,5 +1,7 @@
 package common.extensions
 
+import kotlin.math.abs
+
 operator fun Pair<Int, Int>.plus(pair: Pair<Int, Int>) = (first + pair.first) to (second + pair.second)
 operator fun Pair<Int, Int>.minus(pair: Pair<Int, Int>) = (first - pair.first) to (second - pair.second)
 fun Pair<Int, Int>.allNeighbour(): List<Pair<Int, Int>> {
@@ -29,8 +31,14 @@ fun <T> Pair<T, T>.forBoth(lambda: (T) -> Unit) {
     lambda(first)
     lambda(second)
 }
+
 fun <T, R> Triple<T, T, T>.map(lambda: (T) -> (R)): Triple<R, R, R> =
     Triple(lambda(first), lambda(second), lambda(third))
 
 operator fun Pair<Int, Int>.rangeTo(to: Pair<Int, Int>) =
     (this.first autoRange to.first).flatMap { x -> (this.second autoRange to.second).map { x to it } }
+
+fun <T, R> Pair<T, R>.swap() = this.second to this.first
+
+fun Idx2D.manhattenTo(other: Idx2D) =
+    abs(this.first - other.first) + abs(this.second - other.second)

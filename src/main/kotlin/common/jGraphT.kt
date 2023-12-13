@@ -67,11 +67,12 @@ fun <V> Map<V, Iterable<V>>.toDirectedJGraph(): DefaultDirectedGraph<V, DefaultE
     return graph
 }
 
-fun <V> Map<V, Iterable<Pair<String, V>>>.toLabeledGraph() {
+fun <V> Map<V, Iterable<Pair<String, V>>>.toLabeledGraph(): DirectedPseudograph<V, LabeledEdge> {
     val graph = DirectedPseudograph<V, LabeledEdge>(LabeledEdge::class.java)
     this.forEach { (source, neighbours) ->
         neighbours.forEach { (label, target) ->
             graph.addEdgeMissingVertex(source, target, LabeledEdge(label))
         }
     }
+    return graph
 }
