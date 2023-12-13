@@ -86,15 +86,26 @@ object Lists2D {
         }
     }
 
-    fun <T, V> List2D<T>.map2D(transform: (T) -> V): List2D<V> {
-        return this.map {
-            it.map(transform)
+    fun <T, V> List2D<T>.map2D(transform: (T) -> V): List2D<V> =
+        this.map { it.map(transform) }
+
+    fun <T> List2D<T>.column(idx: Int): List<T> {
+        return buildList {
+            for (i in this@column.indices)
+                add(this@column[i][idx])
+        }
+    }
+
+    fun <T> List2D<T>.columns(): List<List<T>> {
+        return buildList {
+            for (i in this@columns.first().indices)
+                add(this@columns.column(i))
         }
     }
 
     // Rotate any 2D-List assuming every sub-list has the same size.
     // Note this is not the same as transposing.
-    fun <T> List<List<T>>.rotatedClockwise(): List2D<T> {
+    fun <T> List2D<T>.rotatedClockwise(): List2D<T> {
         val rotated = ArrayList<ArrayList<T>>()
         for (i in this.first().indices) {
             rotated.add(ArrayList(this.first().size))
