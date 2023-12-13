@@ -75,6 +75,9 @@ object Lists2D {
     fun <T> List2D<T>.getOrNull(ij: Idx2D) = this.getOrNull(ij.first, ij.second)
 
     operator fun <T> List2D<T>.get(ij: Idx2D): T = this[ij.first][ij.second]
+
+    infix fun <T> List<List<T>>.containsIndex(ij: Idx2D) = getOrNull(ij) != null
+
     fun <T, V> List2D<T>.map2DIndexed(transform: (Idx2D, T) -> V): List2D<V> {
         return this.mapIndexed { i, ts ->
             ts.mapIndexed { j, t ->
@@ -88,4 +91,20 @@ object Lists2D {
             it.map(transform)
         }
     }
+
+    // Rotate any 2D-List assuming every sub-list has the same size.
+    // Note this is not the same as transposing.
+    fun <T> List<List<T>>.rotatedClockwise(): List2D<T> {
+        val rotated = ArrayList<ArrayList<T>>()
+        for (i in this.first().indices) {
+            rotated.add(ArrayList(this.first().size))
+        }
+        for (row in this.reversed()) {
+            for ((j, e) in row.withIndex()) {
+                rotated[j].add(e)
+            }
+        }
+        return rotated
+    }
+
 }
