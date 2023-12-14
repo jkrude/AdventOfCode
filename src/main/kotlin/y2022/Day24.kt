@@ -1,5 +1,6 @@
 package y2022
 
+import common.Direction
 import common.Point2D
 import common.algorithms.Search
 import common.readFileLines
@@ -16,12 +17,12 @@ object Day24 {
         val end: Point2D
     ) {
 
-        private fun Day22.Direction.visualize(): Char {
+        private fun Direction.visualize(): Char {
             return when (this) {
-                Day22.Direction.WEST -> '<'
-                Day22.Direction.EAST -> '>'
-                Day22.Direction.NORTH -> '^'
-                Day22.Direction.SOUTH -> 'v'
+                Direction.WEST -> '<'
+                Direction.EAST -> '>'
+                Direction.NORTH -> '^'
+                Direction.SOUTH -> 'v'
             }
         }
 
@@ -79,15 +80,15 @@ object Day24 {
     }
 
     private data class Blizzard(
-        val direction: Day22.Direction,
+        val direction: Direction,
         val position: Point2D
     ) {
         fun move(): Blizzard {
             val nextPosition = when (this.direction) {
-                Day22.Direction.NORTH -> position + (0 x2y -1)
-                Day22.Direction.SOUTH -> position + (0 x2y 1)
-                Day22.Direction.WEST -> position + (-1 x2y 0)
-                Day22.Direction.EAST -> position + (1 x2y 0)
+                Direction.NORTH -> position + (0 x2y -1)
+                Direction.SOUTH -> position + (0 x2y 1)
+                Direction.WEST -> position + (-1 x2y 0)
+                Direction.EAST -> position + (1 x2y 0)
             }
             return Blizzard(direction, nextPosition)
         }
@@ -99,10 +100,10 @@ object Day24 {
                 .mapIndexedNotNull { x, char ->
                     when (char) {
                         '.' -> null
-                        '<' -> Blizzard(Day22.Direction.WEST, x x2y y)
-                        '>' -> Blizzard(Day22.Direction.EAST, x x2y y)
-                        '^' -> Blizzard(Day22.Direction.NORTH, x x2y y)
-                        'v' -> Blizzard(Day22.Direction.SOUTH, x x2y y)
+                        '<' -> Blizzard(Direction.WEST, x x2y y)
+                        '>' -> Blizzard(Direction.EAST, x x2y y)
+                        '^' -> Blizzard(Direction.NORTH, x x2y y)
+                        'v' -> Blizzard(Direction.SOUTH, x x2y y)
                         else -> throw IllegalArgumentException(char.toString())
                     }
                 }
