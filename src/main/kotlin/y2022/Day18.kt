@@ -1,7 +1,6 @@
 package y2022
 
 import common.algorithms.Search
-import common.extensions.runIfTrue
 import common.readFileLines
 
 private typealias Point3D = Triple<Int, Int, Int>
@@ -59,17 +58,10 @@ object Day18 {
 
             if (cube in cubes) return false.andCacheFor(cube)
 
-            var foundPath = false
-
-            Search.genericSearch(
-                cube,
-                neighbours = { it.adjacentSides().filter { n -> n !in cubes } },
-                add = Search::breadthFirst,
-                isTarget = {
-                    isOutSide(it).runIfTrue { foundPath = true }
-                }
-            )
-            return foundPath.andCacheFor(cube)
+            val path = Search.startingFrom(cube).neighbors { it.adjacentSides().filter { n -> n !in cubes } }
+                .stopAt(::isOutSide)
+                .executeBfs()
+            return (path != null).andCacheFor(cube)
         }
         return cubes.sumOf { cube ->
             cube.adjacentSides().count { neighbouringCube ->

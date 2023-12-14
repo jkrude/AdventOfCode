@@ -1,5 +1,6 @@
 package y2023
 
+import common.algorithms.Search
 import common.extensions.*
 import common.extensions.Lists2D.containsIndex
 import common.extensions.Lists2D.get
@@ -51,19 +52,11 @@ object Day10 {
         graph: MutableMap<Idx2D, MutableList<Idx2D>>,
         start: Idx2D
     ): DefaultDirectedGraph<Idx2D, DefaultEdge> {
-        val queue = ArrayDeque<Idx2D>().apply { addAll(graph[start]!!) }
-        val visited = mutableSetOf<Idx2D>()
-        while (queue.isNotEmpty()) {
-            val curr = queue.removeLast()
-            if (curr in visited) continue
-            visited.add(curr)
-            graph.getValue(curr).forEach { n ->
-                if (n != start) {
-                    graph.getValue(n).remove(curr)
-                    queue.add(n)
-                }
-            }
-        }
+        Search.startingFrom(graph[start]!!)
+            .neighbors {
+                graph.getValue(it).filter { n -> n != start }
+                    .onEach { n -> graph.getValue(n).remove(it) }
+            }.executeDfs()
         return graph.toDirectedJGraph()
     }
 

@@ -148,14 +148,13 @@ class Day14 {
                 ).filter { !groundMap.isSolid(it) }
             }
 
-            Search.genericSearch(
-                500 x2y 0,
-                neighbours = ::neighbours,
-                Search::breadthFirst
-            ) {
-                sandCounter++
-                groundMap.addSand(it)
-            }
+            Search.startingFrom(500 x2y 0)
+                .neighbors(::neighbours)
+                .onEachVisit {
+                    sandCounter++
+                    groundMap.addSand(it)
+                }
+                .executeBfs()
             return sandCounter
         }
     }

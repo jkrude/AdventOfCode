@@ -158,14 +158,10 @@ object Day24 {
         fun search(from: Point2D, to: Point2D, startingMinute: Int, maxDepth: Int = 400): Int {
             var currentBest = startingMinute + maxDepth
             // Go to adjacent tile or stay
-            Search.genericSearch(
-                startingMinute to from,
-                { searchOptions(it, currentBest, end = to) },
-                Search::depthFirst,
-                callOnEachVisited = { (minute, point) ->
-                    if (point == to) currentBest = min(minute, currentBest)
-                }
-            )
+            Search.startingFrom(startingMinute to from)
+                .neighbors { searchOptions(it, currentBest, end = to) }
+                .onEachVisit { (minute, point) -> if (point == to) currentBest = min(minute, currentBest) }
+                .executeDfs()
             return currentBest
         }
 
