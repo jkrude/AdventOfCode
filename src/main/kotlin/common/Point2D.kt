@@ -63,9 +63,11 @@ data class Point2D(var x: Int = 0, var y: Int = 0) {
         )
     }
 
-}
+    companion object {
+        fun of(pair: Pair<Int, Int>) = Point2D(pair.first, pair.second)
+    }
 
-fun Point2D.of(pair: Pair<Int, Int>) = Point2D(pair.first, pair.second)
+}
 infix fun Int.x2y(other: Int) = Point2D(this, other)
 
 fun <T> List<List<T>>.getOrNull(ij: Point2D) = this.getOrNull(ij.x)?.getOrNull(ij.y)

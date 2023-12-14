@@ -16,7 +16,7 @@ class PowerSetIterator<T>(
 
     private var binaryCounter: Int = 0
     private val lastIndex = 1.shl(underlyingList.size) - 1 // 2^n -1
-    override fun hasNext(): Boolean = binaryCounter != lastIndex
+    override fun hasNext(): Boolean = binaryCounter <= lastIndex
 
     override fun next(): List<T> {
         check(hasNext(), { "Next was called without an available next element." })
