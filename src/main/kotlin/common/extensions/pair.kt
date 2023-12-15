@@ -26,6 +26,10 @@ fun Pair<Int, Int>.neighbours(): List<Pair<Int, Int>> = listOf(
 )
 
 fun <T, R> Pair<T, T>.map(lambda: (T) -> (R)): Pair<R, R> = lambda(first) to lambda(second)
+fun <T, V, R> Pair<T, V>.mapFirst(lambda: (T) -> (R)): Pair<R, V> = lambda(first) to second
+fun <T, V, R> Pair<V, T>.mapSecond(lambda: (T) -> (R)): Pair<V, R> = first to lambda(second)
+
+fun <T> List<T>.takePair(): Pair<T, T> = this[0] to this[1]
 
 fun <T> Pair<T, T>.forBoth(lambda: (T) -> Unit) {
     lambda(first)
