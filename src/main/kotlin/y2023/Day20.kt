@@ -74,16 +74,19 @@ object Day20 {
 
     private fun Network.sendPulse(onEachPulse: (Pulse) -> Unit) {
         val broadcaster = this.vertexSet().first { it is Broadcaster }
+        // We process each pulse that was sent in a breadth first manner.
+        // The pulse is consumed by its target-module which itself produces outgoing signals.
         Search.startingFrom(Pulse(broadcaster, broadcaster, Signal.Low))
             .onEachVisit(onEachPulse)
             .neighbors { pulse -> pulse.to.process(pulse) }
-            .allowRevisit()
+            .allowRevisit() // It is okay if we process the same Pulse multiple times.
             .executeBfs()
     }
 
     fun partOne(lines: List<String>): Long {
         val moduleGraph = importGraph(lines)
         var (lows, highs) = 0L to 0L
+        // As times is that low we can simply simulate each button push and count the number of signals that were send.
         repeat(1_000) {
             moduleGraph.sendPulse { if (it.signal == Signal.High) highs++ else lows++ }
         }
@@ -91,18 +94,23 @@ object Day20 {
     }
 
     fun partTwo(lines: List<String>): Long {
+        // The online input to "rx" is a single inverter.
+        // With a quick inspection using Graph<Vertex, E>.toDOT it can be observed that all inputs
+        // to the inverter are on separate cycle. So we can find the first time for each input to be triggered
+        // independently and compute the lcm of them.
         val moduleGraph = importGraph(lines)
         val dependencies = moduleGraph.vertexSet().first { it.name == "rx" }
             .predecessorIn(moduleGraph)
             .flatMap { it predecessorIn moduleGraph }
             .associateWithTo(HashMap()) { 0L }
+        // Repeat triggering the button until every dependency sent at least one "High" signal.
         for (iteration in generateSequence(1L, Long::inc)) {
             moduleGraph.sendPulse {
                 if (it.from in dependencies && it.signal == Signal.High) dependencies[it.from] = iteration
             }
             if (dependencies.all { it.value != 0L }) break
         }
-        return dependencies.values.reduce(::lcm)
+        return dependencies.values.reduce(::lcm) // The first time all dependencies trigger at the same time.
     }
 }
 
