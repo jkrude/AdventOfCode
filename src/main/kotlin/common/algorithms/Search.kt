@@ -9,6 +9,7 @@ object Search {
         private lateinit var neighborsOf: (V) -> Iterable<V>
         private lateinit var target: (V) -> Boolean
         private var visitor: (V) -> Unit = {}
+        private var revisitNodes: Boolean = false
         fun neighbors(supplier: (V) -> Iterable<V>): SearchBuilder<V> {
             this.neighborsOf = supplier
             return this
@@ -26,6 +27,11 @@ object Search {
 
         fun onEachVisit(consumer: (V) -> Unit): SearchBuilder<V> {
             this.visitor = consumer
+            return this
+        }
+
+        fun allowRevisit(): SearchBuilder<V> {
+            revisitNodes = true
             return this
         }
 
@@ -63,7 +69,8 @@ object Search {
                 neighbours = neighborsOf,
                 add = addTo,
                 isTarget = target,
-                callOnEachVisited = visitor
+                callOnEachVisited = visitor,
+                revisitNodes = revisitNodes
             )
         }
     }
@@ -80,7 +87,8 @@ object Search {
         neighbours: (Vertex) -> Iterable<Vertex>,
         add: (Deque<Vertex>, Vertex) -> Unit,
         isTarget: (node: Vertex) -> Boolean = { _ -> false },
-        callOnEachVisited: (Vertex) -> Unit = {}
+        callOnEachVisited: (Vertex) -> Unit = {},
+        revisitNodes: Boolean = false
     ): Vertex? {
         val visited = mutableSetOf<Vertex>()
         val queue: Deque<Vertex> = ArrayDeque()
@@ -88,10 +96,10 @@ object Search {
         start.forEach { queue.push(it) }
         while (queue.isNotEmpty()) {
             val currentNode = queue.removeFirst()
-            if (visited.contains(currentNode)) {
+            if (!revisitNodes && visited.contains(currentNode)) {
                 continue
             }
-            visited.add(currentNode)
+            if (!revisitNodes) visited.add(currentNode)
 
             callOnEachVisited(currentNode)
 

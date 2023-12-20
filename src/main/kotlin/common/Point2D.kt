@@ -1,5 +1,6 @@
 package common
 
+import common.extensions.List2D
 import kotlin.math.abs
 
 data class Point2D(var x: Int = 0, var y: Int = 0) {

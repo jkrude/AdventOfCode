@@ -5,7 +5,11 @@ import org.jgrapht.Graphs
 import org.jgrapht.graph.DefaultDirectedGraph
 import org.jgrapht.graph.DefaultEdge
 import org.jgrapht.graph.DirectedPseudograph
+import org.jgrapht.nio.IntegerIdProvider
+import org.jgrapht.nio.dot.DOTExporter
 import org.jgrapht.traverse.BreadthFirstIterator
+import java.io.ByteArrayOutputStream
+import java.util.function.Function
 
 class LabeledEdge(val label: String) : DefaultEdge() {
     override fun toString(): String {
@@ -53,9 +57,17 @@ fun <Vertex, Edge> Graph<Vertex, Edge>.reachableVerticesFrom(source: Vertex): Se
     return reached
 }
 
-fun <Vertex, Edge, G : Graph<Vertex, Edge>> G.neighborsOf(vertex: Vertex): Set<Vertex> {
-    return Graphs.neighborSetOf(this, vertex)
-}
+fun <Vertex, Edge, G : Graph<Vertex, Edge>> G.neighborsOf(vertex: Vertex): Set<Vertex> =
+    Graphs.neighborSetOf(this, vertex)
+
+infix fun <Vertex, Edge> Vertex.neighborsIn(graph: Graph<Vertex, Edge>): Set<Vertex> =
+    Graphs.neighborSetOf(graph, this)
+
+infix fun <Vertex, Edge> Vertex.successorsIn(graph: Graph<Vertex, Edge>): List<Vertex> =
+    Graphs.successorListOf(graph, this)
+
+infix fun <Vertex, Edge> Vertex.predecessorIn(graph: Graph<Vertex, Edge>): List<Vertex> =
+    Graphs.predecessorListOf(graph, this)
 
 fun <V> Map<V, Iterable<V>>.toDirectedJGraph(): DefaultDirectedGraph<V, DefaultEdge> {
     val graph = DefaultDirectedGraph<V, DefaultEdge>(DefaultEdge::class.java)
@@ -75,4 +87,12 @@ fun <V> Map<V, Iterable<Pair<String, V>>>.toLabeledGraph(): DirectedPseudograph<
         }
     }
     return graph
+}
+
+fun <Vertex, E : DefaultEdge> Graph<Vertex, E>.toDOT(
+    vertexToString: Function<Vertex, String> = IntegerIdProvider()
+): String {
+    val out = ByteArrayOutputStream()
+    DOTExporter<Vertex, E>(vertexToString).exportGraph(this, out)
+    return out.toString()
 }
