@@ -23,7 +23,7 @@ object Day4 {
         val xmas: List<Char> = "XMAS".toList()
         // Count the number of XMAS patterns starting from each index.
         return map.indices2d().sumOf { ij ->
-            if (map[ij] != 'X') 0
+            if (map[ij] != 'X') return@sumOf 0
             ij.xmasPattern().count { indices ->
                 indices.map { idx2d -> map.getOrNull(idx2d) }.toList() == xmas
             }
