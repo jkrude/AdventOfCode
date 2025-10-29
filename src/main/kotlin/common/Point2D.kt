@@ -71,4 +71,7 @@ data class Point2D(var x: Int = 0, var y: Int = 0) {
 }
 infix fun Int.x2y(other: Int) = Point2D(this, other)
 
-fun <T> List<List<T>>.getOrNull(ij: Point2D) = this.getOrNull(ij.x)?.getOrNull(ij.y)
+fun <T> List2D<T>.getOrNull(ij: Point2D) = this.getOrNull(ij.x)?.getOrNull(ij.y)
+
+infix fun <T> List2D<T>.containsPoint(point: Point2D) = point.x in this.indices && point.y in this[point.x].indices
+operator fun <T> List2D<T>.get(ij: Point2D): T = this.getOrNull(ij.x)?.getOrNull(ij.y)!!
