@@ -10,7 +10,7 @@ fun <T> subsetsOfSize(subsetSize: Int, iterable: List<T>): Sequence<List<T>> {
         .map { it.map { idx -> iterable[idx] } }
 }
 
-infix fun <T, R> Iterable<T>.crossProduct(other: Iterable<R>): List<Pair<T, R>> =
+infix fun <T, R> Iterable<T>.product(other: Iterable<R>): List<Pair<T, R>> =
     this.flatMap { other.map { o -> it to o } }
 
 

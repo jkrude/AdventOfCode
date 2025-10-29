@@ -7,12 +7,12 @@ import common.extensions.Lists2D.getOrNull
 import common.extensions.Lists2D.indices2d
 import common.extensions.plus
 import common.extensions.toCharList2D
-import common.math.crossProduct
+import common.math.product
 import common.readFileLines
 
 object Day4 {
     // Step-Differences in all directions vertical, horizontal and diagonal.
-    private val steps: List<Pair<Int, Int>> = (-1..1).crossProduct(-1..1).filter { it.first != 0 || it.second != 0 }
+    private val steps: List<Pair<Int, Int>> = (-1..1).product(-1..1).filter { it.first != 0 || it.second != 0 }
     private fun Idx2D.move(step: Idx2D): Sequence<Idx2D> = generateSequence(this) { it + step }
     private fun Idx2D.xmasPattern(): List<Sequence<Pair<Int, Int>>> {
         return steps.map { step -> this.move(step).take(4) }
