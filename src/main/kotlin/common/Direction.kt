@@ -26,12 +26,21 @@ enum class Direction { // Do not change order
     companion object {
 
         // Assuming x is increasing to the right and y is increasing to the south
-        fun Point2D.moveToward(direction: Direction): Point2D =
+        fun Point2D.moveToward(direction: Direction, amount: Int = 1): Point2D =
             when (direction) {
-                NORTH -> x x2y y - 1
-                EAST -> x + 1 x2y y
-                SOUTH -> x x2y y + 1
-                WEST -> x - 1 x2y y
+                NORTH -> x x2y y - amount
+                EAST -> x + amount x2y y
+                SOUTH -> x x2y y + amount
+                WEST -> x - amount x2y y
+            }
+
+        fun ofArrow(char: Char) =
+            when (char) {
+                '<' -> WEST
+                '>' -> EAST
+                '^' -> NORTH
+                'v' -> SOUTH
+                else -> throw IllegalArgumentException("Not an arrow: $char")
             }
     }
 }

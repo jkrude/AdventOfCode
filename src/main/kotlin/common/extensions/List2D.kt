@@ -76,6 +76,14 @@ object Lists2D {
 
     operator fun <T> List2D<T>.get(ij: Idx2D): T = this[ij.first][ij.second]
 
+    operator fun <T> MutableList<MutableList<T>>.set(ij: Idx2D, value: T) {
+        this[ij.first][ij.second] = value
+    }
+
+    operator fun <T> MutableList<MutableList<T>>.set(ij: Point2D, value: T) {
+        this[ij.x][ij.y] = value
+    }
+
     infix fun <T> List<List<T>>.containsIndex(ij: Idx2D) = getOrNull(ij) != null
 
     fun <T, V> List2D<T>.map2DIndexed(transform: (Idx2D, T) -> V): List2D<V> {
