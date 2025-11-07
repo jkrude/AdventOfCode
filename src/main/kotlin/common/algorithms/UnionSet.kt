@@ -20,6 +20,12 @@ class UnionSet<T>() {
         parents[parentB] = parents[parentA]!! // Could be optimized
     }
 
+    fun unionSetAddIfAbsent(a: T, b: T) {
+        if (a !in parents) add(a)
+        if (b !in parents) add(b)
+        return unionSet(a, b)
+    }
+
     fun findSet(a: T): T {
         var curr = a
         val visited = mutableListOf(a)
