@@ -18,11 +18,11 @@ fun Pair<Int, Int>.allNeighbour(): List<Pair<Int, Int>> {
     )
 }
 
-fun Pair<Int, Int>.neighbours(): List<Pair<Int, Int>> = listOf(
-    (first + 1) to second,
-    (first - 1) to second,
-    first to (second + 1),
-    first to (second - 1)
+fun Pair<Int, Int>.neighbours(steps: Int = 1): List<Pair<Int, Int>> = listOf(
+    (first + steps) to second,
+    (first - steps) to second,
+    first to (second + steps),
+    first to (second - steps)
 )
 
 fun <T, R> Pair<T, T>.map(lambda: (T) -> (R)): Pair<R, R> = lambda(first) to lambda(second)
@@ -47,5 +47,5 @@ operator fun Pair<Int, Int>.rangeTo(to: Pair<Int, Int>) =
 
 fun <T, R> Pair<T, R>.swap() = this.second to this.first
 
-fun Idx2D.manhattenTo(other: Idx2D) =
+infix fun Idx2D.manhattenTo(other: Idx2D) =
     abs(this.first - other.first) + abs(this.second - other.second)
