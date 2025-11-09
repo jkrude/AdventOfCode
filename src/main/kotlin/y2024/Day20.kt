@@ -13,6 +13,11 @@ import java.util.Objects.hashCode
 
 object Day20 {
 
+    /**
+     * Representing the current point (Idx2D) and the distance from the start.
+     * The distance is only used as auxiliary information and should be ignored by the search algorithm.
+     * Therefore, the distance is excluded from equals and hash.
+     */
     private data class IdxWithDistance(val idx: Idx2D, val distance: Int) {
         override fun equals(other: Any?): Boolean {
             return other is IdxWithDistance && other.idx == this.idx
