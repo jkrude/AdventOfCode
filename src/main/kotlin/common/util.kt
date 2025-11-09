@@ -20,3 +20,11 @@ fun maxNullable(left: Int?, right: Int?) = when {
 val longRegex = """(-?\d+)""".toRegex()
 fun String.findAllLong(startIndex: Int = 0): Sequence<Long> =
     longRegex.findAll(this, startIndex = startIndex).map { it.value.toLong() }
+
+infix fun String.stringDifference(other: String): String =
+    """
+        $this
+        $other
+        ${"-".repeat(max(this.length, other.length))}
+        ${this.zip(other).map { (a, b) -> if (a == b) '.' else 'X' }.joinToString("")}
+    """.trimIndent()
