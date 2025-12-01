@@ -18,11 +18,11 @@ object Setup {
         val request = HttpRequest.newBuilder()
             .uri(fromWhere)
             .setHeader("Cookie", sessionCookie)
-            .build();
+            .build()
 
         val response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        require(response.statusCode() == 200) { "Bad response : ${response.statusCode()}" }
+        require(response.statusCode() == 200) { "Bad response : ${response.statusCode()}\n${response.body()}" }
         return response.body().trimEnd() // remove last empty line
     }
 
