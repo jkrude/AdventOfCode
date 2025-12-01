@@ -28,3 +28,6 @@ infix fun String.stringDifference(other: String): String =
         ${"-".repeat(max(this.length, other.length))}
         ${this.zip(other).map { (a, b) -> if (a == b) '.' else 'X' }.joinToString("")}
     """.trimIndent()
+
+fun Boolean.toInt(): Int = if (this) 1 else 0
+fun Boolean.toLong(): Long = if (this) 1L else 0L
