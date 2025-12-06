@@ -4,6 +4,7 @@ import org.jgrapht.Graph
 import org.jgrapht.Graphs
 import org.jgrapht.graph.DefaultDirectedGraph
 import org.jgrapht.graph.DefaultEdge
+import org.jgrapht.graph.DefaultUndirectedGraph
 import org.jgrapht.graph.DirectedPseudograph
 import org.jgrapht.nio.IntegerIdProvider
 import org.jgrapht.nio.dot.DOTExporter
@@ -69,8 +70,8 @@ infix fun <Vertex, Edge> Vertex.successorsIn(graph: Graph<Vertex, Edge>): List<V
 infix fun <Vertex, Edge> Vertex.predecessorIn(graph: Graph<Vertex, Edge>): List<Vertex> =
     Graphs.predecessorListOf(graph, this)
 
-fun <V> Map<V, Iterable<V>>.toDirectedJGraph(): DefaultDirectedGraph<V, DefaultEdge> {
-    val graph = DefaultDirectedGraph<V, DefaultEdge>(DefaultEdge::class.java)
+fun <V, E, G : Graph<V, E>> Map<V, Iterable<V>>.toJGraph(constructor: () -> G): G {
+    val graph = constructor()
     this.forEach { (source, neighbours) ->
         neighbours.forEach { target ->
             graph.addEdgeMissingVertex(source, target)
@@ -78,6 +79,12 @@ fun <V> Map<V, Iterable<V>>.toDirectedJGraph(): DefaultDirectedGraph<V, DefaultE
     }
     return graph
 }
+
+fun <V> Map<V, Iterable<V>>.toDirectedJGraph(): DefaultDirectedGraph<V, DefaultEdge> =
+    this.toJGraph { DefaultDirectedGraph<V, DefaultEdge>(DefaultEdge::class.java) }
+
+fun <V> Map<V, Iterable<V>>.toUnDirectedJGraph(): DefaultUndirectedGraph<V, DefaultEdge> =
+    this.toJGraph { DefaultUndirectedGraph<V, DefaultEdge>(DefaultEdge::class.java) }
 
 fun <V> Map<V, Iterable<Pair<String, V>>>.toLabeledGraph(): DirectedPseudograph<V, LabeledEdge> {
     val graph = DirectedPseudograph<V, LabeledEdge>(LabeledEdge::class.java)
