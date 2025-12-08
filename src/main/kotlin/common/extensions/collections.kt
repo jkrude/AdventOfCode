@@ -1,5 +1,6 @@
 package common.extensions
 
+import java.util.*
 import kotlin.experimental.ExperimentalTypeInference
 
 fun List<String>.toCharList2D(): List<List<Char>> = this.map { it.toList() }
@@ -30,3 +31,39 @@ fun <T> Iterable<T>.productOf(transform: (T) -> Long): Long = this.map(transform
 @OptIn(ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
 fun <T> Iterable<T>.productOf(transform: (T) -> Int): Int = this.map(transform).reduce { acc, t -> acc * t }
+
+/**
+ * Collect the top k elements form an iterable.
+ * The elements are returned ascending if used as min-heap and defencing if used with max-heap.
+ */
+fun <T> Iterable<T>.collectTopK(k: Int, heapComparator: Comparator<T>): Collection<T> {
+    if (k <= 0) return emptyList()
+
+    val heap = PriorityQueue(k, heapComparator)
+
+    for (item in this) {
+        if (heap.size < k) {
+            heap.add(item)
+        } else if (heapComparator.compare(item, heap.peek()) > 0) {
+            heap.poll()
+            heap.add(item)
+        }
+    }
+    return heap
+}
+
+fun <T : Comparable<T>> Iterable<T>.takeMinK(k: Int): List<T> {
+    return collectTopK(k, Collections.reverseOrder()).sorted()
+}
+
+fun <T : Comparable<T>> Iterable<T>.takeMaxK(k: Int): List<T> {
+    return collectTopK(k, naturalOrder()).sortedDescending()
+}
+
+inline fun <T, R : Comparable<R>> Iterable<T>.takeMinKBy(k: Int, crossinline selector: (T) -> R): List<T> {
+    return collectTopK(k, compareByDescending(selector)).sortedBy(selector)
+}
+
+inline fun <T, R : Comparable<R>> Iterable<T>.takeMaxKBy(k: Int, crossinline selector: (T) -> R): List<T> {
+    return collectTopK(k, compareBy(selector)).sortedByDescending(selector)
+}
