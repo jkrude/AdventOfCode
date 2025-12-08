@@ -1,7 +1,7 @@
 package common.math
 
-import kotlin.math.ceil
 import org.apache.commons.numbers.combinatorics.Combinations
+import kotlin.math.ceil
 
 
 fun <T> subsetsOfSize(subsetSize: Int, iterable: List<T>): Sequence<List<T>> {
@@ -12,6 +12,26 @@ fun <T> subsetsOfSize(subsetSize: Int, iterable: List<T>): Sequence<List<T>> {
 
 infix fun <T, R> Iterable<T>.product(other: Iterable<R>): List<Pair<T, R>> =
     this.flatMap { other.map { o -> it to o } }
+
+/**
+ * Produce all pairs of distinct items.
+ * For listOf(1,2,3) this would generate (1,2), (1,3), (2,3).
+ * This is different from listOf(1,2,3).product(listOf(1,2,3)) which would generate
+ * (1,1), (1,2), (1,3), (2,1), (2,2), ..., (3,3)
+ * Note that distinct refers to the exclusion of pairing items with themselves,
+ * but if the list contains duplicate items, there can be duplicate pairs.
+ * The resulting list will have (N * (N-1) / 2 items
+ **/
+fun <T> List<T>.distinctPairs(): List<Pair<T, T>> {
+    val capacity = this.size * (this.size - 1) / 2
+    val result = ArrayList<Pair<T, T>>(capacity)
+    for (i in indices) {
+        for (j in i + 1 until size) {
+            result.add(this[i] to this[j])
+        }
+    }
+    return result
+}
 
 
 class PowerSetIterator<T>(
