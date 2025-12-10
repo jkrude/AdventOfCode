@@ -3,6 +3,8 @@ package common.extensions
 import arrow.core.Either
 
 infix fun Int.autoRange(to: Int) = if (this < to) this..to else this downTo to
+infix fun Long.autoRange(to: Long) = if (this < to) this..to else this downTo to
+
 fun IntRange.extendedBy(symmetric: Int): IntRange {
     require(symmetric > 0)
     return (start - symmetric)..(endInclusive + symmetric)
