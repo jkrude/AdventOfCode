@@ -18,5 +18,7 @@ fun Regex.findOverlapping(text: String, startIndex: Int = 0): MutableList<MatchR
         allMatches.add(match);
     } while (true);
     return allMatches
-
 }
+
+fun String.substringBetween(leftDelimiter: String, rightDelimiter: String): String =
+    this.substringAfter(leftDelimiter).substringBefore(rightDelimiter)

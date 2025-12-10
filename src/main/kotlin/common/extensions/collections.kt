@@ -21,6 +21,20 @@ fun <T> MutableMap<T, Int>.dec(key: T, default: Int = 0) {
     this[key] = this.getOrDefault(key, default) - 1
 }
 
+fun <K, V> MutableMap<K, MutableList<V>>.addTo(key: K, value: V) {
+    this.getOrPut(key) { mutableListOf() }.add(value)
+}
+
+fun <T, K, V> Iterable<T>.associateToList(transform: (T) -> Pair<K, V>): MutableMap<K, MutableList<V>> {
+    val map = mutableMapOf<K, MutableList<V>>()
+    this.forEach { item ->
+        val (key, value) = transform(item)
+        map.addTo(key, value)
+    }
+    return map
+}
+
+
 fun Iterable<Long>.product(): Long = this.reduce { acc, t -> acc * t }
 fun Iterable<Int>.product(): Int = this.reduce { acc, t -> acc * t }
 
