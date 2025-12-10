@@ -105,7 +105,7 @@ object Day19 {
             val yieldThisTurn = resourceMapOf { robotsAtStartOfTurn[thisTurn].at(it) }
 
             // The sum of costs of each robot we bought this turn
-            val resourcesSpendThisTurn: EnumMap<Resource, ArithExpr<IntSort>> = resourceMapOf { resource ->
+            val resourcesSpendThisTurn: EnumMap<Resource, Expr<IntSort>> = resourceMapOf { resource ->
                 robotBought[thisTurn].map { (robotType, wasRobotBought) ->
                     wasRobotBought * bluePrint.requiresFor(robotType).at(resource)
                 }.sum()

@@ -10,9 +10,9 @@ class Kontext : Context() {
     /* Primitive math */
 
     /* Plus */
-    infix operator fun <R : ArithSort> ArithExpr<out R>.plus(other: ArithExpr<out R>): ArithExpr<R> = mkAdd(this, other)
-    infix operator fun <R : IntSort> ArithExpr<out R>.plus(other: Int): ArithExpr<IntSort> = mkAdd(this, mkInt(other))
-    infix operator fun <R : IntSort> ArithExpr<out R>.plus(other: Long): ArithExpr<IntSort> = mkAdd(this, mkInt(other))
+    infix operator fun <R : ArithSort> Expr<out R>.plus(other: Expr<out R>): ArithExpr<R> = mkAdd(this, other)
+    infix operator fun <R : IntSort> Expr<out R>.plus(other: Int): ArithExpr<IntSort> = mkAdd(this, mkInt(other))
+    infix operator fun <R : IntSort> Expr<out R>.plus(other: Long): ArithExpr<IntSort> = mkAdd(this, mkInt(other))
     infix operator fun <T : IntSort> Int.plus(other: Expr<T>): ArithExpr<IntSort> = mkAdd(mkInt(this), other)
     infix operator fun <T : IntSort> Long.plus(other: Expr<T>): ArithExpr<IntSort> = mkAdd(mkInt(this), other)
 
@@ -129,7 +129,7 @@ class Kontext : Context() {
         return i
     }
 
-    fun List<ArithExpr<IntSort>>.sum(): ArithExpr<IntSort> = this.reduce { acc, other -> acc plus other }
+    fun List<Expr<IntSort>>.sum(): Expr<IntSort> = this.reduce { acc, other -> acc + other }
 
 }
 
